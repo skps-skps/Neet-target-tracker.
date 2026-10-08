@@ -1,0 +1,3975 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172033">
+<title>NEET Revision & Target Planner - Made by SKPS</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--body-bg, #f4f0e6);font-family:system-ui,-apple-system,sans-serif;color:#172033; background-size:cover; background-position:center; background-attachment:fixed;}
+.app{max-width:750px;margin:auto;min-height:100vh;background:var(--app-bg, #faf8f2);display:flex;flex-direction:column;box-shadow:0 0 20px rgba(0,0,0,0.05)}
+.top{padding:20px 18px;background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 48%,#312e81 100%);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid #60a5fa;box-shadow:0 8px 24px rgba(30,64,175,.28);position:relative;overflow:hidden}.top:before{content:"";position:absolute;inset:-60% -20%;background:radial-gradient(circle at 25% 30%,rgba(96,165,250,.22),transparent 35%),radial-gradient(circle at 80% 70%,rgba(167,139,250,.2),transparent 38%);pointer-events:none}.top>div{position:relative;z-index:1}.top h1{margin:0;font-size:22px;line-height:1.25;letter-spacing:.2px;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+
+.top p{margin:8px 0 0;opacity:1;font-size:13px;font-weight:800;color:#dbeafe;background:rgba(15,23,42,.38);border:1px solid rgba(147,197,253,.35);padding:6px 10px;border-radius:999px;display:inline-block;box-shadow:0 4px 12px rgba(0,0,0,.18);text-shadow:0 1px 5px rgba(0,0,0,.3)}
+.dl-btn{background:#2563eb;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:13px;transition:0.2s}
+.dl-btn:hover{background:#1d4ed8}
+.breadcrumb{padding:12px 18px;background:#e2e8f0;font-size:14px;font-weight:600;color:#4a5568;display:flex;align-items:center;gap:6px;border-bottom:1px solid #cbd5e1;flex-wrap:wrap}
+.breadcrumb span{cursor:pointer;color:#2b6cb0}
+.breadcrumb span:hover{text-decoration:underline}
+.content{padding:16px;flex:1}
+.section-title{margin:15px 0 10px 0;font-size:16px;color:var(--text-color, #1e293b);border-bottom:2px solid #cbd5e1;padding-bottom:5px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));gap:14px;margin-top:10px}
+.card{background:var(--card-bg, #f0ebd9);border:2px solid #cbd5e1;border-radius:14px;padding:16px 12px;text-align:center;font-weight:700;font-size:15px;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative}
+.card:hover{transform:translateY(-2px)}
+.day-view-subjects-hint{font-size:11px;color:var(--card-muted-text,#475569);margin-top:2px;font-weight:700;}
+/* Overall Progress subject highlights */
+.overall-subject-card{
+  border-width:2px;
+  box-shadow:0 3px 10px rgba(15,23,42,.10);
+}
+.overall-subject-card.physics{
+  border-color:#2563eb;
+  box-shadow:0 3px 12px rgba(37,99,235,.18);
+}
+.overall-subject-card.chemistry{
+  border-color:#0f766e;
+  box-shadow:0 3px 12px rgba(15,118,110,.18);
+}
+.overall-subject-card.biology{
+  border-color:#7c3aed;
+  box-shadow:0 3px 12px rgba(124,58,237,.18);
+}
+.overall-subject-card:hover{
+  box-shadow:0 5px 16px rgba(15,23,42,.18);
+}
+
+/* Soft boundary highlights: color stays on the edge, with no dark fill. */
+.soft-highlight-blue{border-color:rgba(59,130,246,.38) !important;box-shadow:0 0 7px rgba(59,130,246,.10)}
+.soft-highlight-green{border-color:rgba(16,185,129,.38) !important;box-shadow:0 0 7px rgba(16,185,129,.10)}
+.soft-highlight-purple{border-color:rgba(139,92,246,.38) !important;box-shadow:0 0 7px rgba(139,92,246,.10)}
+.soft-highlight-pink{border-color:rgba(236,72,153,.34) !important;box-shadow:0 0 7px rgba(236,72,153,.09)}
+.soft-highlight-amber{border-color:rgba(245,158,11,.38) !important;box-shadow:0 0 7px rgba(245,158,11,.10)}
+.qp-subject-highlight{box-shadow:0 0 8px rgba(124,58,237,.10)}
+.qp-chapter-card,.qp-section-card{box-shadow:0 0 7px rgba(59,130,246,.08)}
+
+
+.delete-btn{position:absolute;top:8px;right:8px;background:#ffebe9;color:#b91c1c;border:1px solid #fca5a5;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all 0.2s;z-index:10}
+.delete-btn:hover{background:#b91c1c;color:#fff;transform:scale(1.1)}
+
+.qp-detail-header{padding:14px;margin-bottom:14px}
+.qp-detail-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.qp-detail-title-row h2{margin:0;font-size:20px;line-height:1.25}
+.qp-delete-chapter-btn{width:auto;margin:0;background:#fff1f2;color:#be123c;border:1px solid #fda4af;padding:8px 10px;border-radius:9px;font-size:12px;white-space:nowrap}
+.qp-add-section-toggle{margin:0;background:#172033;font-size:13px;padding:10px 12px}
+.qp-add-section-panel{display:flex;gap:8px;margin-top:10px}
+.qp-add-section-panel input{margin:0;flex:1}
+.qp-add-section-panel button{width:auto;margin:0;white-space:nowrap;padding:9px 12px}
+.qp-section-grid{margin-top:0}
+.qp-section-card{min-height:126px;padding:14px 12px 12px;justify-content:space-between;gap:10px}
+.qp-section-name{font-size:15px;line-height:1.25;display:flex;align-items:flex-start;gap:7px;text-align:center;justify-content:center;width:100%;padding:4px 26px 0}
+.qp-section-status{width:100%;margin:0;padding:9px 8px;border-radius:9px;color:#fff;border:0;font-size:13px;font-weight:800}
+.qp-section-delete{top:8px;right:8px;width:25px;height:25px;font-size:12px}
+
+/* Question Practice range cards */
+.qp-range-card{background:var(--box-bg,#f3eedf);border:1px solid #dcd6c5;border-radius:14px;margin-bottom:12px;overflow:visible;}
+.qp-range-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;cursor:pointer;user-select:none;}
+.qp-range-header:hover{background:rgba(255,255,255,.18)}
+.qp-range-title{font-weight:800;font-size:15px;}
+.qp-range-summary{font-size:12px;color:#57534e;margin-top:3px;}
+.qp-range-chevron{font-size:18px;font-weight:900;line-height:1;min-width:22px;text-align:center;}
+.qp-range-body{padding:0 14px 10px;}
+.qp-answer-mode{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+.qp-answer-toggle{border:0;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;cursor:pointer;min-width:78px;}
+.qp-answer-toggle.off{background:#e5e7eb;color:#374151;}
+.qp-answer-toggle.on{background:#16a34a;color:#fff;}
+.qp-question-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid var(--border,#ddd);}
+.qp-question-number{font-weight:800;min-width:48px;font-size:16px;}
+.qp-answer-buttons{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.qp-answer-button{width:48px;height:44px;padding:0;border-radius:9px;border:1px solid #aaa;background:var(--card-bg,#fff);cursor:pointer;font-weight:800;font-size:15px;}
+@media(max-width:520px){.qp-question-row{gap:7px;}.qp-question-number{min-width:42px}.qp-answer-buttons{gap:5px}.qp-answer-button{width:45px;height:42px}.qp-range-header{padding:12px 10px}.qp-answer-toggle{min-width:72px;padding:6px 9px;}}
+.qp-range-delete{position:static!important;flex:0 0 auto;width:28px;height:28px;font-size:12px;}
+.qp-chapter-card{padding:16px 48px 16px 16px;min-height:72px;text-align:left;align-items:flex-start}
+.qp-chapter-card .icon{margin-right:5px}
+@media(max-width:520px){
+  .qp-detail-title-row{align-items:flex-start;flex-direction:column}
+  .qp-delete-chapter-btn{width:100%}
+  .qp-add-section-panel{flex-direction:column}
+  .qp-add-section-panel button{width:100%}
+}
+
+.card-status{font-size:12px;padding:4px 10px;border-radius:12px;font-weight:800;margin-top:6px;display:inline-block}
+.status-pending{background:#881337;color:#ffffff;border:1px solid #4c0519;box-shadow:0 2px 4px rgba(136,19,55,0.4)}
+.status-progress{background:#b45309;color:#ffffff;border:1px solid #78350f;box-shadow:0 2px 4px rgba(180,83,9,0.4)}
+.status-completed{background:#0f5132;color:#ffffff;border:1px solid #052c1e;box-shadow:0 2px 4px rgba(15,81,50,0.5)}
+
+.card-progress-bar{width:100%;height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-top:6px}
+.card-progress-fill{height:100%;border-radius:99px;transition:width 0.3s}
+
+.box{background:var(--box-bg, #f3eedf);border:1px solid #dcd6c5;border-radius:16px;padding:15px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+label{font-size:12px;font-weight:700;display:block;margin-bottom:2px}
+input, textarea, select{width:100%;padding:8px 10px;margin-top:2px;border:1px solid #c2bba8;border-radius:8px;font-size:13px;background:var(--input-bg, #fcfbfa)}
+button{width:100%;padding:11px;border:0;border-radius:10px;background:#172033;color:#fff;font-weight:700;font-size:14px;margin-top:10px;cursor:pointer}
+button:hover{opacity:0.9}
+.add-input-group{display:flex;gap:8px;margin-bottom:15px}
+.add-input-group input{margin-top:0}
+.add-input-group button{width:auto;margin-top:0;padding:0 20px;white-space:nowrap}
+
+.section-card{background:var(--section-bg, #fdfbf7);border:1px solid #dcd6c5;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.section-card h4{margin:0 0 10px 0;font-size:15px;color:#1e293b;display:flex;align-items:center;justify-content:space-between}
+
+.task-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--box-bg, #f3eedf);border-radius:8px;margin-bottom:6px;border:1px solid #e1dacb;cursor:pointer}
+.task-item.done{background:#d1e7dd;border-color:#0f5132;color:#0f5132;font-weight:700}
+.task-item input[type="checkbox"]{width:auto;margin:0;transform:scale(1.2);cursor:pointer;accent-color:#0f5132}
+
+.pyq-item{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 12px;background:var(--box-bg, #f3eedf);border-radius:10px;margin-bottom:8px;border:1px solid #e1dacb}
+.pyq-item.done{background:#d1e7dd;border-color:#0f5132;color:#0f5132;font-weight:700}
+.pyq-inputs{display:flex;align-items:center;gap:6px;font-size:13px}
+.pyq-inputs input[type="number"]{width:55px;padding:4px 6px;margin:0;text-align:center;font-size:13px;border-radius:6px}
+
+.progress{height:12px;background:#e1dacb;border-radius:99px;overflow:hidden;margin:10px 0}
+.bar{height:100%;width:0;background:#0f5132;transition:.3s}
+.small{font-size:12px;color:#57534e}
+.stats{display:flex;justify-content:space-between;font-weight:700}
+.hidden{display:none}
+
+.cat-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.cat-row input[type="text"]{flex:1.2;font-weight:600}
+.cat-row input[type="number"]{flex:1}
+.remove-cat-btn{background:#ffebe9;color:#b91c1c;border:1px solid #fca5a5;border-radius:8px;width:36px;height:35px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;flex-shrink:0}
+
+.btn-add-cat{background:#e2e8f0;color:#2b6cb0;border:1px dashed #cbd5e1;padding:8px 12px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-top:10px;text-align:center}
+.btn-add-cat:hover{background:#dcd6c5}
+
+.day-card{background:#fff5f5;border:1px solid #fca5a5;border-radius:14px;padding:14px;margin-bottom:14px}
+.day-card.completed{background:#d1e7dd;border-color:#0f5132;color:#0f5132}
+
+.day-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:8px;}
+.day-title-wrap{display:flex;flex-direction:column;flex-grow:1;}
+.day-header h4{margin:0;font-size:15px;color:#1e293b;line-height:1.3;}
+.day-sub-info{font-size:12px;color:#64748b;margin-top:2px;font-weight:600;}
+
+.badge-alert{background:#881337;color:#fff;font-size:11px;padding:4px 10px;border-radius:8px;font-weight:bold;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 3px rgba(136,19,55,0.3);}
+.badge-done{background:#0f5132;color:#fff;font-size:11px;padding:4px 10px;border-radius:8px;font-weight:bold;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 3px rgba(15,81,50,0.3);}
+
+.row-input-group{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.row-input-group span{font-size:13px;font-weight:bold;color:#475569;width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-input-group input{margin-top:0;padding:6px 10px;font-size:13px}
+
+.checkbox-wrap{display:flex;align-items:center;gap:8px;margin-top:12px;cursor:pointer;font-size:13px;font-weight:bold;color:#334155;border-top:1px solid rgba(0,0,0,0.06);padding-top:8px}
+.checkbox-wrap input{width:auto;margin:0;transform:scale(1.2);accent-color:#0f5132}
+
+.subj-box{background:var(--section-bg, #fdfbf7);border:1px solid #dcd6c5;border-radius:10px;padding:10px;margin-top:10px}
+.subj-box h4{margin:0 0 6px 0;font-size:14px;color:#2b6cb0}
+.test-folder-card{border:1px solid #c2bba8;background:var(--section-bg, #fdfbf7);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 5px rgba(0,0,0,0.03);position:relative}
+.test-folder-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid #e1dacb;padding-bottom:8px}
+.test-folder-header h3{margin:0;font-size:18px;color:#172033}
+
+.badge{font-size:12px;padding:4px 10px;border-radius:12px;font-weight:bold;display:inline-block;margin-top:6px}
+.badge-gold{background:#0f5132;color:#ffffff;border:1px solid #052c1e}
+.badge-silver{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe}
+.badge-bronze{background:#f1f5f9;color:#334155;border:1px solid #cbd5e1}
+.badge-red{background:#881337;color:#ffffff;border:1px solid #4c0519;font-weight:800}
+
+.test-review-box{background:var(--box-bg, #f3eedf);border:1px solid #dcd6c5;border-left:4px solid #2b6cb0;padding:8px 12px;border-radius:6px;margin-top:10px;font-size:13px;color:#334155}
+.review-edit-btn{background:#e2e8f0;color:#2b6cb0;border:1px solid #cbd5e1;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer;margin-top:8px;display:inline-block}
+.review-edit-btn:hover{background:#dcd6c5}
+
+.app-footer{text-align:center;padding:15px;margin-top:auto;font-size:13px;font-weight:600;color:var(--text-color, #1e293b);border-top:1px solid rgba(0,0,0,0.08);background:rgba(0,0,0,0.02)}
+
+@media(max-width:550px){.grid{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+
+#month-test-day-control{display:flex;align-items:center;}
+@media(max-width:520px){#month-test-day-control{width:auto;flex:0 0 auto;}#month-test-day-control>div{width:auto;justify-content:flex-start;}}
+
+/* Question Practice timer: stays visible while scrolling through long question ranges. */
+.qp-sticky-timer{
+  position:-webkit-sticky !important;
+  position:sticky !important;
+  top:8px;
+  z-index:1000;
+  box-shadow:0 4px 14px rgba(15,23,42,.12);
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease;
+}
+.qp-sticky-timer.qp-timer-danger{
+  background:#fee2e2 !important;
+  border-color:#ef4444 !important;
+}
+.qp-sticky-timer.qp-timer-danger .qp-timer-display{
+  color:#dc2626 !important;
+}
+
+</style>
+<style id="test-review-editor-fix">
+.test-review-modal-backdrop{
+  position:fixed; inset:0; z-index:99999;
+  background:rgba(15,23,42,.55);
+  display:flex; align-items:center; justify-content:center;
+  padding:18px; box-sizing:border-box;
+}
+.test-review-modal{
+  width:min(92vw,520px);
+  background:var(--card-bg,#fff);
+  color:var(--text,#172033);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+  border:1px solid rgba(100,116,139,.28);
+}
+.test-review-modal h3{margin:0 0 12px;font-size:19px;}
+.test-review-modal textarea{
+  width:100%; min-height:120px; resize:vertical; box-sizing:border-box;
+  border:1px solid #cbd5e1; border-radius:10px; padding:10px;
+  font:inherit; color:inherit; background:var(--input-bg,#fff);
+  outline:none;
+}
+.test-review-modal textarea:focus{border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,.14);}
+.test-review-modal-actions{
+  display:flex; justify-content:flex-end; gap:8px; margin-top:12px;
+}
+.test-review-modal-actions button{
+  border:0; border-radius:9px; padding:9px 14px; font-weight:700; cursor:pointer;
+}
+.test-review-cancel{background:#e5e7eb;color:#334155;}
+.test-review-save{background:#2b6cb0;color:#fff;}
+</style>
+
+<style>
+.qp-answer-button{width:52px!important;height:52px!important;min-width:52px!important;border-radius:10px!important;font-size:17px!important;}
+.qp-answer-buttons{gap:9px!important;}
+</style>
+
+<style>
+/* Automatic contrast for dark custom background colors. */
+html[data-custom-dark="1"] body,
+html[data-custom-dark="1"] .app,
+html[data-custom-dark="1"] .section-title,
+html[data-custom-dark="1"] h1,
+html[data-custom-dark="1"] h2,
+html[data-custom-dark="1"] h3,
+html[data-custom-dark="1"] h4,
+html[data-custom-dark="1"] p,
+html[data-custom-dark="1"] label,
+html[data-custom-dark="1"] .small,
+html[data-custom-dark="1"] .day-sub-info { color:var(--text-color,#f8fafc) !important; }
+html[data-custom-dark="1"] [style*="color:#1e293b"],
+html[data-custom-dark="1"] [style*="color:#172033"],
+html[data-custom-dark="1"] [style*="color:#334155"],
+html[data-custom-dark="1"] [style*="color:#475569"],
+html[data-custom-dark="1"] [style*="color:#64748b"] { color:#f8fafc !important; }
+html[data-custom-dark="1"] input:not([type="color"]),
+html[data-custom-dark="1"] textarea,
+html[data-custom-dark="1"] select { color:#172033 !important; }
+
+</style>
+
+
+<style id="test-chapter-ui-fix">
+.test-chapter-subject-box{margin-top:10px;padding:10px;border:1px solid #dbeafe;border-radius:12px;background:#fff;}
+.test-chapter-subject-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.test-chapter-subject-title{font-size:14px;font-weight:900;color:#0f172a;}
+.test-chapter-add-btn{width:38px !important;min-width:38px !important;height:38px !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:50% !important;background:#2563eb !important;color:#fff !important;font-size:24px !important;line-height:38px !important;font-weight:900 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-sizing:border-box !important;cursor:pointer !important;}
+.test-chapters-container{display:flex;flex-direction:column;gap:8px;margin-top:9px;}
+.test-chapters-empty{padding:9px 10px;border:1px dashed #cbd5e1;border-radius:9px;background:#f8fafc;color:#94a3b8;font-size:11px;text-align:center;}
+.test-chapter-row{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #fca5a5;border-radius:10px;background:#fee2e2;}
+.test-chapter-row .test-chapter-check{width:21px !important;height:21px !important;min-width:21px !important;margin:0 !important;flex:0 0 21px !important;cursor:pointer;accent-color:#16a34a;}
+.test-chapter-row .test-chapter-input{display:block !important;width:auto !important;min-width:0 !important;flex:1 1 auto !important;height:40px !important;margin:0 !important;padding:8px 11px !important;border:1px solid #cbd5e1 !important;border-radius:9px !important;background:#fff !important;color:#0f172a !important;font-size:14px !important;box-sizing:border-box !important;outline:none;}
+.test-chapter-row .test-chapter-input:focus{border-color:#2563eb !important;box-shadow:0 0 0 2px rgba(37,99,235,.12);}
+.test-chapter-row .test-chapter-remove{width:34px !important;min-width:34px !important;height:34px !important;padding:0 !important;margin:0 !important;border:0 !important;border-radius:50% !important;background:#fff !important;color:#dc2626 !important;font-size:18px !important;line-height:34px !important;font-weight:900 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-sizing:border-box !important;cursor:pointer !important;}
+.test-chapter-row .test-chapter-remove:active{transform:scale(.95);}
+@media (max-width:420px){
+  .test-chapter-row{gap:6px;padding:7px;}
+  .test-chapter-row .test-chapter-input{height:38px !important;font-size:13px !important;}
+}
+</style>
+
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div>
+      <h1>🩺 NEET Revision & Target Planner</h1>
+      <p id="countdown-banner">⏳ Loading countdown...</p>
+      <div id="personal-countdown-wrap" style="margin-top:6px; display:inline-flex; align-items:center; gap:7px; height:30px; vertical-align:middle;">
+        <div id="personal-countdown" onclick="document.getElementById('personal-target-date').showPicker ? document.getElementById('personal-target-date').showPicker() : document.getElementById('personal-target-date').click();" style="display:inline-flex; align-items:center; gap:7px; height:30px; box-sizing:border-box; padding:0 12px; border-radius:22px; border:1px solid rgba(255,255,255,.22); background:rgba(15,23,42,.18); box-shadow:0 2px 8px rgba(0,0,0,.10); font-size:12px; font-weight:800; line-height:1.35; cursor:pointer; user-select:none; white-space:nowrap;">🎯 My Target: No date set</div>
+        <button id="personal-clear" type="button" aria-label="Clear target date" title="Clear target date" onclick="clearPersonalTargetDate();" style="display:none; width:30px; height:30px; flex:0 0 30px; align-self:center; transform:translateY(-5px); padding:0; border:1px solid rgba(255,255,255,.30); border-radius:50%; background:rgba(15,23,42,.20); color:#fff; font-size:17px; line-height:28px; font-weight:900; cursor:pointer; align-items:center; justify-content:center;">×</button>
+        <input id="personal-target-date" type="date" onchange="setPersonalTargetDate(this.value)" aria-label="Change target date" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;">
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+      <button class="dl-btn" onclick="toggleSettingsModal()" style="background:#334155;">⚙️ Settings</button>
+    </div>
+  </header>
+
+  <div id="settings-modal-box" style="display:none; background:#1e293b; color:#fff; padding:15px; border-bottom:2px solid #cbd5e1;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <h3 style="margin:0; font-size:16px;">⚙️ App Settings & Options</h3>
+      <button onclick="toggleSettingsModal()" style="width:auto; background:#ef4444; padding:4px 10px; margin:0; font-size:11px;">Close</button>
+    </div>
+    
+    <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+      <button class="dl-btn" onclick="toggleBgModal()" style="background:#0f5132; font-size:12px; padding:6px 10px; width:auto;">🎨 Theme / BG</button>
+      <button class="dl-btn" onclick="downloadSelf()" style="font-size:12px; padding:6px 10px; width:auto;">📥 Download</button>
+      <button class="dl-btn" onclick="togglePhoneModal()" style="background:#0284c7; font-size:12px; padding:6px 10px; width:auto;">📱 Change Phone</button>
+    </div>
+  </div>
+
+  <div id="bg-customizer-box" style="display:none; background:#0f172a; color:#fff; padding:15px; border-bottom:2px solid #cbd5e1;">
+    <h3 style="margin:0 0 10px 0; font-size:16px;">🎨 Background & Theme Settings</h3>
+    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <button onclick="setTheme('cream')" style="width:auto; background:#f4f0e6; color:#172033; padding:6px 12px; margin:0; font-size:12px;">Creamy Medical</button>
+      <button onclick="setTheme('black')" style="width:auto; background:#111827; color:#fff; border:1px solid #374151; padding:6px 12px; margin:0; font-size:12px;">Dark / Black</button>
+      <button onclick="setTheme('white')" style="width:auto; background:#ffffff; color:#172033; padding:6px 12px; margin:0; font-size:12px;">Pure White</button>
+      <button onclick="setTheme('blue')" style="width:auto; background:#e0f2fe; color:#0369a1; padding:6px 12px; margin:0; font-size:12px;">Soft Blue</button>
+      
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
+        <span>Custom Color:</span>
+        <input type="color" id="custom-color-picker" onchange="setCustomColor(this.value)" style="width:40px; height:30px; padding:0; border:none; cursor:pointer;">
+      </div>
+
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
+        <span>Upload Photo:</span>
+        <input type="file" accept="image/*" onchange="uploadBgImage(event)" style="font-size:11px; width:160px; padding:2px;">
+      </div>
+      
+      <button onclick="toggleBgModal()" style="width:auto; background:#ef4444; padding:6px 12px; margin:0; font-size:12px;">Back</button>
+    </div>
+  </div>
+
+  <div id="phone-modal-box" style="display:none; background:#0f172a; color:#fff; padding:15px; border-bottom:2px solid #cbd5e1;">
+    <h3 style="margin:0 0 6px 0; font-size:16px;">📱 During Changing Phones (Backup & Restore):</h3>
+    <p style="margin:0 0 10px 0; font-size:12px; opacity:0.8;">Export data to save your progress, then import it on your new phone.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <button onclick="exportData()" style="width:auto; background:#2563eb; color:#fff; padding:6px 12px; margin:0; font-size:12px; border:none; border-radius:8px; cursor:pointer;">📤 Export Data</button>
+      <button onclick="triggerImport()" style="width:auto; background:#16a34a; color:#fff; padding:6px 12px; margin:0; font-size:12px; border:none; border-radius:8px; cursor:pointer;">📥 Import Data</button>
+      <input type="file" id="import-file-input" accept="application/json" onchange="importData(event)" style="display:none;">
+      <button onclick="togglePhoneModal()" style="width:auto; background:#ef4444; padding:6px 12px; margin:0; font-size:12px;">Back</button>
+    </div>
+  </div>
+
+  <div class="breadcrumb" id="breadcrumb">
+    <span onclick="navTo('home', {}, true)">Home</span>
+  </div>
+
+  <section class="content">
+    <div id="view-home">
+      <!-- Test section: kept at the very top of Home. Upcoming + Back Test live inside it. -->
+      <div id="home-test-section" style="margin-bottom:18px;padding:12px;border:2px solid rgba(37,99,235,.28);border-radius:18px;background:var(--box-bg,#f8fafc);box-shadow:0 4px 12px rgba(37,99,235,.07);">
+        <div style="font-size:20px;font-weight:900;color:var(--text-color,#172033);margin-bottom:10px;">📝 Test</div>
+        <div id="upcoming-test-section"></div>
+        <div id="back-test-section" style="margin-top:10px;"></div>
+      </div>
+
+      <h3 class="section-title">📘 Overall Progress Subjects</h3>
+      <div class="card-grid">
+        <div class="card overall-subject-card physics" onclick="openMasterSubject('Physics')"><span class="icon">⚡</span>Physics</div>
+        <div class="card overall-subject-card chemistry" onclick="openMasterSubject('Chemistry')"><span class="icon">🧪</span>Chemistry</div>
+        <div class="card overall-subject-card biology" onclick="openMasterSubject('Biology')"><span class="icon">🧬</span>Biology</div>
+      </div>
+
+      <h3 class="section-title">📝 Question Practice</h3>
+      <div class="card-grid">
+        <div class="card" style="border-color:#7c3aed; background:var(--card-bg, #f5f3ff);" onclick="navTo('qp-subjects')">
+          <span class="icon">📝</span>Question Practice
+        </div>
+      </div>
+
+      <h3 class="section-title">🗓️ Monthly Practice & Targets</h3>
+      <div class="card-grid">
+        <div class="card" style="border-color:#2b6cb0; background:var(--card-bg, #eef6ff);" onclick="navTo('months')">
+          <span class="icon">📅</span>Month-wise Target Tracker
+        </div>
+        <div class="card" style="border-color:#0f5132; background:var(--card-bg, #f0fdf4);" onclick="navTo('tests')">
+          <span class="icon">📝</span>Test Marks Tracker
+        </div>
+      </div>
+
+      <div id="today-targets-section" style="margin-top:18px;"></div>
+    </div>
+
+    <div id="view-back-tests" class="hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;">
+        <div>
+          <h3 style="margin:0;">🕘 Back Test</h3>
+          <div class="small" style="margin-top:3px;">Completed tests saved here. Tap a test to enter its result.</div>
+        </div>
+        <button type="button" onclick="navTo('home')" style="width:auto;margin:0;padding:8px 12px;border:none;border-radius:9px;background:#e2e8f0;color:#334155;font-size:12px;font-weight:900;cursor:pointer;">← Home</button>
+      </div>
+      <div id="back-tests-page-list"></div>
+    </div>
+
+    <div id="view-master-chapters" class="hidden">
+      <h3 id="master-subject-title">Chapters</h3>
+      <div class="add-input-group">
+        <input type="text" id="new-master-chapter-name" placeholder="Enter Chapter Name...">
+        <button onclick="addMasterChapter()">Add Chapter</button>
+      </div>
+      <div class="card-grid" id="master-chapters-list"></div>
+    </div>
+
+    <div id="view-planner" class="hidden">
+      <div class="box">
+        <h2 id="planner-chapter-title" style="margin:0 0 6px 0;">Chapter Tracker</h2>
+        <div class="stats"><span>Chapter Progress</span><span id="chapter-pct">0%</span></div>
+        <div class="progress"><div class="bar" id="chapter-bar"></div></div>
+        <div class="small" id="chapter-count">0 of 0 tasks completed</div>
+      </div>
+
+      <div class="box">
+        <p class="small" style="font-weight:bold; margin:0 0 8px 0;">➕ Add Custom Task to this Chapter:</p>
+        <div class="add-input-group">
+          <input type="text" id="new-task-name" placeholder="e.g. Short Notes, NCERT Reading...">
+          <button onclick="addCustomTask()">Add Task</button>
+        </div>
+      </div>
+
+      <div id="chapter-tasks-container"></div>
+    </div>
+
+    <div id="view-qp-subjects" class="hidden">
+      <h3>📝 Question Practice - Select Subject</h3>
+      <div class="card-grid">
+        <div class="card soft-highlight-blue" onclick="qpOpenSubject('Physics')"><span class="icon">⚡</span>Physics</div>
+        <div class="card soft-highlight-green" onclick="qpOpenSubject('Chemistry')"><span class="icon">🧪</span>Chemistry</div>
+        <div class="card soft-highlight-purple" onclick="qpOpenSubject('Biology')"><span class="icon">🧬</span>Biology</div>
+      </div>
+    </div>
+
+    <div id="view-qp-chapters" class="hidden">
+      <h3 id="qp-subject-title">Question Practice Chapters</h3>
+      <div class="add-input-group">
+        <input type="text" id="new-qp-chapter-name" placeholder="Enter Chapter Name...">
+        <button onclick="qpAddChapter()">Add Chapter</button>
+      </div>
+      <div class="card-grid" id="qp-chapters-list"></div>
+    </div>
+
+    <div id="view-qp-chapter-detail" class="hidden">
+      <div class="box qp-detail-header">
+        <div class="qp-detail-title-row">
+          <h2 id="qp-chapter-title">Chapter Question Practice</h2>
+        </div>
+        <button type="button" class="qp-add-section-toggle" onclick="qpToggleAddSection()">＋ Add Custom Section</button>
+        <div id="qp-add-section-panel" class="qp-add-section-panel hidden">
+          <input type="text" id="new-qp-section-name" placeholder="Enter custom section / exercise name..." maxlength="80">
+          <button type="button" onclick="qpAddSection()">Add Section</button>
+        </div>
+        <div class="small">Tap a section to open it. Tap Pending/Done to change its status.</div>
+      </div>
+      <div class="card-grid qp-section-grid" id="qp-exercises-list"></div>
+    </div>
+
+    <div id="view-qp-exercise" class="hidden">
+      <div class="box">
+        <h2 id="qp-exercise-title" style="margin:0 0 6px 0;">Module Exercise</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+          <input type="number" id="qp-range-start" min="1" placeholder="From (e.g. 1)" style="flex:1;min-width:110px;">
+          <input type="number" id="qp-range-end" min="1" placeholder="To (e.g. 50)" style="flex:1;min-width:110px;">
+          <input type="number" id="qp-range-timer-minutes" min="1" max="1440" value="15" placeholder="Minutes" style="flex:1;min-width:100px;">
+          <button type="button" onclick="qpAddRange()">＋ Add Question Range</button>
+        </div>
+        <div class="small" style="margin-top:8px;">अपनी जरूरत के अनुसार कोई भी range बनाओ, जैसे 1–20, 21–50, 51–80. हर range अलग save होगी.</div>
+      </div>
+      <div id="qp-ranges-list"></div>
+    </div>
+
+    <div id="view-months" class="hidden">
+      <h3>Select Month</h3>
+      <div class="card-grid" id="months-list"></div>
+    </div>
+
+    <div id="view-month-days" class="hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+        <h3 id="month-days-title" style="margin:0;">Select Day</h3>
+        <div id="month-test-day-control"></div>
+      </div>
+      <p class="small" style="margin-bottom:12px;">💡 Tip: Month के पास Test Day ON रहने पर ही नीचे किसी Day को Test Day के रूप में select किया जा सकता है.</p>
+      <div class="card-grid" id="month-days-list"></div>
+    </div>
+
+    <div id="view-day-subjects" class="hidden">
+      <h3 id="day-subjects-title">Select Subject</h3>
+      <div class="card-grid" id="day-subjects-grid"></div>
+    </div>
+
+    <div id="view-day-subject-chapters" class="hidden">
+      <h3 id="day-subject-chapters-title">Chapters</h3>
+      
+      <div class="add-input-group">
+        <input type="text" id="new-day-chapter-name" placeholder="Add Chapter...">
+        <button onclick="addDayChapter()">Add Chapter</button>
+      </div>
+
+      <div id="day-subject-chapters-list"></div>
+    </div>
+
+    <div id="view-chapter-detail" class="hidden">
+      <div class="box">
+        <h2 id="md-chapter-title" style="margin:0 0 6px 0;">Chapter Breakdown</h2>
+        <div class="stats"><span>Overall Completion</span><span id="md-pct">0%</span></div>
+        <div class="progress"><div class="bar" id="md-bar"></div></div>
+        <div id="md-status-badge" style="margin-top:6px;"></div>
+      </div>
+
+      <div class="box">
+        <label>Total Target Days Allotted</label>
+        <input type="number" id="md-days" placeholder="e.g. 5" oninput="saveChapterDetail()">
+
+        <div id="categories-container"></div>
+        <button class="btn-add-cat" onclick="addCategoryRow()">➕ Add Category</button>
+
+        <button style="margin-top:14px; background:#0f5132;" onclick="generateAutoPlan()">⚡ Auto-Generate & Save Day Plan</button>
+      </div>
+
+      <div id="md-days-list"></div>
+    </div>
+
+    <div id="view-tests" class="hidden">
+      <button id="toggle-form-btn" style="margin-bottom:12px; background:#2b6cb0;" onclick="toggleTestForm()">➕ Add New Test Record</button>
+
+      <div class="box" id="test-form-box" style="display:none;">
+        <h3 style="margin-top:0;">📝 Add Test Score</h3>
+        <label>Test Name / Title
+          <input type="text" id="test-name" placeholder="e.g. Minor Test 01 / Full Mock 2">
+        </label>
+        
+        <div style="background:var(--section-bg, #eef6ff); border:1px solid #bed7f3; padding:12px; border-radius:12px; margin-top:12px;">
+          <h4 style="margin:0 0 8px 0; color:#1e40af;">🎯 Overall Test Summary</h4>
+          <div class="grid">
+            <label>Total Obtained Marks<input type="number" id="grand-obt" placeholder="e.g. 615"></label>
+            <label>Overall Total Marks<input type="number" id="grand-tot" min="1" placeholder="e.g. 720"></label>
+            <label>Total Wrong Qs<input type="number" id="grand-wrong" min="0" placeholder="Auto-calculated"></label>
+            <label>Total Unattempted Qs<input type="number" id="grand-unatt" min="0" placeholder="Auto-calculated"></label>
+          </div>
+        </div>
+
+        <p class="small" style="margin:14px 0 4px 0; font-weight:bold;">Subject-wise Details:</p>
+        <div>
+          <div class="subj-box">
+            <h4>⚡ Physics</h4>
+            <div class="grid-4">
+              <label>Obtained<input type="number" id="p-obt" placeholder="Auto/Manual"></label>
+              <label>Wrong Qs<input type="number" id="p-wrong" min="0" oninput="autoCalc('p')"></label>
+              <label>Unattempted<input type="number" id="p-unatt" min="0" oninput="autoCalc('p')"></label>
+              <label>Total<input type="number" id="p-tot" min="1" value="180" oninput="autoCalc('p')"></label>
+            </div>
+          </div>
+          <div class="subj-box">
+            <h4>🧪 Chemistry</h4>
+            <div class="grid-4">
+              <label>Obtained<input type="number" id="c-obt" placeholder="Auto/Manual"></label>
+              <label>Wrong Qs<input type="number" id="c-wrong" min="0" oninput="autoCalc('c')"></label>
+              <label>Unattempted<input type="number" id="c-unatt" min="0" oninput="autoCalc('c')"></label>
+              <label>Total<input type="number" id="c-tot" min="1" value="180" oninput="autoCalc('c')"></label>
+            </div>
+          </div>
+          <div class="subj-box">
+            <h4>🌿 Botany</h4>
+            <div class="grid-4">
+              <label>Obtained<input type="number" id="b-obt" placeholder="Auto/Manual"></label>
+              <label>Wrong Qs<input type="number" id="b-wrong" min="0" oninput="autoCalc('b')"></label>
+              <label>Unattempted<input type="number" id="b-unatt" min="0" oninput="autoCalc('b')"></label>
+              <label>Total<input type="number" id="b-tot" min="1" value="180" oninput="autoCalc('b')"></label>
+            </div>
+          </div>
+          <div class="subj-box">
+            <h4>🦁 Zoology</h4>
+            <div class="grid-4">
+              <label>Obtained<input type="number" id="z-obt" placeholder="Auto/Manual"></label>
+              <label>Wrong Qs<input type="number" id="z-wrong" min="0" oninput="autoCalc('z')"></label>
+              <label>Unattempted<input type="number" id="z-unatt" min="0" oninput="autoCalc('z')"></label>
+              <label>Total<input type="number" id="z-tot" min="1" value="180" oninput="autoCalc('z')"></label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <label>💬 Test Review / Personal Notes (Optional)
+            <textarea id="test-review" rows="3" placeholder="e.g. Bahut achha test tha / Question level tough tha / Revision ki zaroorat hai..."></textarea>
+          </label>
+        </div>
+
+        <button onclick="addTestScore()">Save Test Record</button>
+      </div>
+
+      <div class="box">
+        <h3 style="margin-top:0;">📊 Saved Tests & Performance</h3>
+        <div id="test-list"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="app-footer">
+    Made by <span style="color: red; font-weight: bold;">SKPS</span>
+  </footer>
+</main>
+
+<script>
+function downloadSelf() {
+  const htmlContent = "<!doctype html>\n" + document.documentElement.outerHTML;
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "NEET_Study_Planner.html";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function updateCountdown() {
+  const examDate = new Date("May 1, 2027 09:00:00").getTime();
+  const now = new Date().getTime();
+  const distance = examDate - now;
+
+  const banner = document.getElementById("countdown-banner");
+  if (banner) {
+    if (distance < 0) {
+      banner.textContent = "🎯 NEET Exam Day / Completed!";
+    } else {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      banner.innerHTML = `NEET 2027 ⏳ ${days} days, ${hours} hrs left`;
+    }
+  }
+
+  updatePersonalCountdown();
+}
+
+function setPersonalTargetDate(value) {
+  if (!value) {
+    clearPersonalTargetDate();
+    return;
+  }
+  localStorage.setItem("personalTargetDate", value);
+  updatePersonalCountdown();
+}
+
+function clearPersonalTargetDate() {
+  localStorage.removeItem("personalTargetDate");
+  const input = document.getElementById("personal-target-date");
+  if (input) input.value = "";
+  updatePersonalCountdown();
+}
+
+function updatePersonalCountdown() {
+  const box = document.getElementById("personal-countdown");
+  const input = document.getElementById("personal-target-date");
+  const clearBtn = document.getElementById("personal-clear");
+  if (!box) return;
+
+  const savedDate = localStorage.getItem("personalTargetDate") || "";
+  if (input && savedDate && input.value !== savedDate) input.value = savedDate;
+
+  if (!savedDate) {
+    box.innerHTML = "🎯 My Target: <span style=\"font-weight:700;\">Select a date</span>";
+    if (clearBtn) clearBtn.style.display = "none";
+    return;
+  }
+
+  const parts = savedDate.split("-").map(Number);
+  const target = new Date(parts[0], parts[1] - 1, parts[2], 23, 59, 59, 999).getTime();
+  const distance = target - Date.now();
+
+  const prettyDate = new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(undefined, {
+    day: "numeric", month: "short", year: "numeric"
+  });
+
+  if (distance <= 0) {
+    box.innerHTML = `🎯 My Target: <b>${prettyDate}</b> — <span style=\"color:#fca5a5;\">Target date reached</span>`;
+    if (clearBtn) clearBtn.style.display = "inline-flex";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+  box.innerHTML = `🎯 Target ${prettyDate} ⏳ <b>${days} days, ${hours} hrs, ${minutes} min left</b>`;
+  if (clearBtn) clearBtn.style.display = "inline-flex";
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function toggleSettingsModal() {
+  let box = document.getElementById("settings-modal-box");
+  let bgBox = document.getElementById("bg-customizer-box");
+  let phoneBox = document.getElementById("phone-modal-box");
+  bgBox.style.display = "none";
+  phoneBox.style.display = "none";
+  box.style.display = (box.style.display === "none") ? "block" : "none";
+}
+
+function toggleBgModal() {
+  let box = document.getElementById("bg-customizer-box");
+  let settingsBox = document.getElementById("settings-modal-box");
+  let phoneBox = document.getElementById("phone-modal-box");
+  phoneBox.style.display = "none";
+  settingsBox.style.display = "none";
+  box.style.display = (box.style.display === "none") ? "block" : "none";
+}
+
+function togglePhoneModal() {
+  let box = document.getElementById("phone-modal-box");
+  let settingsBox = document.getElementById("settings-modal-box");
+  let bgBox = document.getElementById("bg-customizer-box");
+  bgBox.style.display = "none";
+  settingsBox.style.display = "none";
+  box.style.display = (box.style.display === "none") ? "block" : "none";
+}
+
+function applyThemeColors(bodyBg, appBg, cardBg, boxBg, sectionBg, inputBg, textColor) {
+  let root = document.documentElement.style;
+  root.setProperty('--body-bg', bodyBg);
+  root.setProperty('--app-bg', appBg);
+  root.setProperty('--card-bg', cardBg);
+  root.setProperty('--box-bg', boxBg);
+  root.setProperty('--section-bg', sectionBg);
+  root.setProperty('--input-bg', inputBg);
+  root.setProperty('--text-color', textColor);
+  if (!root.getPropertyValue('--card-muted-text')) root.setProperty('--card-muted-text', '#475569');
+  document.body.style.backgroundImage = "none";
+}
+
+function isDarkColor(hex) {
+  if (!hex || !/^#[0-9a-fA-F]{6}$/.test(hex)) return false;
+  let r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  let lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+  return lum < 0.48;
+}
+
+function setCustomThemeContrast(dark) {
+  let root = document.documentElement;
+  root.setAttribute('data-custom-dark', dark ? '1' : '0');
+  root.style.setProperty('--text-color', dark ? '#f8fafc' : '#1e293b');
+  root.style.setProperty('--muted-text-color', dark ? '#e2e8f0' : '#475569');
+}
+
+function setTheme(theme) {
+  let config = {};
+  if (theme === 'cream') {
+    config = { bodyBg: '#f4f0e6', appBg: '#faf8f2', cardBg: '#f0ebd9', boxBg: '#f3eedf', sectionBg: '#fdfbf7', inputBg: '#fcfbfa', textColor: '#1e293b' };
+  } else if (theme === 'black') {
+    config = { bodyBg: '#0b0f19', appBg: '#111827', cardBg: '#1f2937', boxBg: '#1f2937', sectionBg: '#1f2937', inputBg: '#374151', textColor: '#f3f4f6' };
+  } else if (theme === 'white') {
+    config = { bodyBg: '#e2e8f0', appBg: '#ffffff', cardBg: '#f1f5f9', boxBg: '#f8fafc', sectionBg: '#f8fafc', inputBg: '#ffffff', textColor: '#0f172a' };
+  } else if (theme === 'blue') {
+    config = { bodyBg: '#bae6fd', appBg: '#f0f9ff', cardBg: '#e0f2fe', boxBg: '#e0f2fe', sectionBg: '#ffffff', inputBg: '#ffffff', textColor: '#0369a1' };
+  }
+  applyThemeColors(config.bodyBg, config.appBg, config.cardBg, config.boxBg, config.sectionBg, config.inputBg, config.textColor);
+  // Preset themes must clear the custom-dark override. Otherwise a previous
+  // dark custom color can force category/secondary text to white even after
+  // switching to a light preset such as Pure White.
+  setCustomThemeContrast(false);
+  appData.themeConfig = { type: 'preset', value: theme };
+  saveData();
+}
+
+function setCustomColor(color) {
+  const dark = isDarkColor(color);
+  const surface = dark ? lightenColor(color, 24) : lightenColor(color, 15);
+  const cardMuted = isDarkColor(surface) ? '#f1f5f9' : '#334155';
+  const box = dark ? lightenColor(color, 30) : lightenColor(color, 10);
+  const section = dark ? lightenColor(color, 36) : lightenColor(color, 20);
+  applyThemeColors(color, color, surface, box, section, '#ffffff', dark ? '#f8fafc' : '#1e293b');
+  document.documentElement.style.setProperty('--card-muted-text', cardMuted);
+  setCustomThemeContrast(dark);
+  appData.themeConfig = { type: 'color', value: color };
+  saveData();
+}
+
+function uploadBgImage(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+
+  // Resize/compress the photo before saving so localStorage does not reject
+  // large phone photos. The image is still shown immediately and persists.
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const maxSide = 1600;
+      const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const imgUrl = canvas.toDataURL('image/jpeg', 0.78);
+
+      document.body.style.backgroundImage = `url("${imgUrl}")`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.body.style.backgroundAttachment = 'fixed';
+      // Let the uploaded photo show through the main app area too.
+      document.documentElement.style.setProperty('--app-bg', 'transparent');
+
+      appData.themeConfig = { type: 'image', value: imgUrl };
+      saveData();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function lightenColor(hex, percent) {
+  let num = parseInt(hex.replace("#",""), 16);
+  let amt = Math.round(2.55 * percent);
+  let R = (num >> 16) + amt;
+  let G = (num >> 8 & 0x00FF) + amt;
+  let B = (num & 0x0000FF) + amt;
+  return "#" + (0x1000000 + (R<255?R<0?0:R:255)*0x10000 + (G<255?G<0?0:G:255)*0x100 + (B<255?B<0?0:B:255)).toString(16).slice(1);
+}
+
+function exportData() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "NEET_AppData.json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
+function triggerImport() {
+  document.getElementById("import-file-input").click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
+      appData = importedData;
+      saveData();
+      loadSavedTheme();
+      navTo('home', {}, true);
+      alert("Data imported successfully!");
+    } catch(err) {
+      alert("Failed to import data. Please ensure the file is a valid JSON.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+const monthIcons = {
+  "January": "❄️", "February": "❤️", "March": "🌿", "April": "🌸",
+  "May": "☀", "June": "🌴", "July": "🌧️", "August": "🇮🇳",
+  "September": "🍂", "October": "🪔", "November": "🎯", "December": "🎄"
+};
+
+const monthDaysCount = {
+  "January": 31, "February": 28, "March": 31, "April": 30,
+  "May": 31, "June": 30, "July": 31, "August": 31,
+  "September": 30, "October": 31, "November": 30, "December": 31
+};
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let currentMasterSubject = "";
+let currentMasterChapter = "";
+let currentMonth = "";
+let currentDayNum = null;
+let currentDaySubject = "";
+let currentDayChapter = "";
+let currentQPSubject = "";
+let currentQPChapter = "";
+let currentQPExercise = "";
+
+let appData = JSON.parse(localStorage.getItem("planner_app_v32")) || {
+  masterSubjects: {
+    "Physics": ["Current Electricity", "Electrostatics"],
+    "Chemistry": ["Chemical Bonding", "Organic Chemistry"],
+    "Biology": ["Cell Biology", "Genetics"]
+  },
+  chapterTrackers: {},
+  daySubjectChapters: {}, 
+  dayChapterDetails: {}, 
+  testDays: {},
+  testDayNames: {},
+  testDayChapters: {},
+  testDayMonthEnabled: {},
+  tests: [],
+  themeConfig: { type: 'preset', value: 'cream' }
+};
+
+// Backward-compatible state for existing saved planners.
+if (!appData.testDays) appData.testDays = {};
+if (!appData.testDayNames) appData.testDayNames = {};
+if (!appData.testDayChapters) appData.testDayChapters = {};
+if (!appData.testDayCompleted) appData.testDayCompleted = {};
+if (!appData.testDayMonthEnabled) appData.testDayMonthEnabled = {};
+// Question Practice data migration: older versions stored chapters as arrays/strings.
+// Normalize everything to { chapterName: { sections: {...} } } so old chapters remain clickable/deletable.
+if (!appData.questionPractice || typeof appData.questionPractice !== 'object' || Array.isArray(appData.questionPractice)) {
+  appData.questionPractice = { Physics: {}, Chemistry: {}, Biology: {} };
+}
+["Physics", "Chemistry", "Biology"].forEach(sub => {
+  const raw = appData.questionPractice[sub];
+  const normalized = {};
+  if (Array.isArray(raw)) {
+    raw.forEach(name => {
+      const n = String(name ?? '').trim();
+      if (n && n !== '0') normalized[n] = { sections: {} };
+    });
+  } else if (raw && typeof raw === 'object') {
+    Object.keys(raw).forEach(key => {
+      let value = raw[key];
+      // Legacy array/object index such as {0: 'Hhji'} -> use the actual chapter name.
+      if (/^\d+$/.test(key) && typeof value === 'string') {
+        const n = value.trim();
+        if (n && n !== '0') normalized[n] = { sections: {} };
+        return;
+      }
+      const n = String(key).trim();
+      // A bare legacy placeholder named 0 should not be shown as a chapter.
+      if (!n || n === '0') {
+        // '0' was an accidental legacy placeholder in the earlier Question Practice build.
+        return;
+      }
+      if (value && typeof value === 'object' && !Array.isArray(value)) normalized[n] = value;
+      else normalized[n] = { sections: {} };
+    });
+  }
+  appData.questionPractice[sub] = normalized;
+});
+saveData();
+
+function saveData() {
+  localStorage.setItem("planner_app_v32", JSON.stringify(appData));
+}
+
+function loadSavedTheme() {
+  if (!appData.themeConfig) return;
+  let tc = appData.themeConfig;
+  if (tc.type === 'preset') {
+    setTheme(tc.value);
+  } else if (tc.type === 'color') {
+    setCustomColor(tc.value);
+  } else if (tc.type === 'image') {
+    document.body.style.backgroundImage = `url("${tc.value}")`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.documentElement.style.setProperty('--app-bg', 'transparent');
+  }
+}
+
+function updateBreadcrumb() {
+  let html = `<span onclick="navTo('home', {}, true)">Home</span>`;
+  if (currentMasterSubject) {
+    html += ` &gt; <span onclick="navTo('master-chapters', {}, true)">${currentMasterSubject}</span>`;
+    if (currentMasterChapter) {
+      html += ` &gt; <span>${currentMasterChapter}</span>`;
+    }
+  } else if (currentMonth) {
+    html += ` &gt; <span onclick="navTo('months', {}, true)">Months</span>`;
+    html += ` &gt; <span onclick="navTo('month-days', {}, true)">${currentMonth}</span>`;
+    if (currentDayNum !== null) {
+      html += ` &gt; <span onclick="navTo('day-subjects', {}, true)">Day ${currentDayNum}</span>`;
+      if (currentDaySubject) {
+        html += ` &gt; <span onclick="navTo('day-subject-chapters', {}, true)">${currentDaySubject}</span>`;
+        if (currentDayChapter) {
+          html += ` &gt; <span>${currentDayChapter} Plan</span>`;
+        }
+      }
+    }
+  } else if (currentQPSubject || currentQPChapter || currentQPExercise || !document.getElementById("view-qp-subjects").classList.contains("hidden")) {
+    html += ` &gt; <span onclick="navTo('qp-subjects', {}, true)">Question Practice</span>`;
+    if (currentQPSubject) {
+      html += ` &gt; <span onclick="navTo('qp-chapters', {subject: currentQPSubject}, true)">${currentQPSubject}</span>`;
+      if (currentQPChapter) {
+        html += ` &gt; <span onclick="navTo('qp-chapter-detail', {chapter: currentQPChapter}, true)">${currentQPChapter}</span>`;
+        if (currentQPExercise) {
+          const sections = qpNormalizeChapter();
+          const sectionName = sections[currentQPExercise] ? sections[currentQPExercise].name : currentQPExercise;
+          html += ` &gt; <span>${sectionName}</span>`;
+        }
+      }
+    }
+  } else if (!document.getElementById("view-back-tests").classList.contains("hidden")) {
+    html += ` &gt; <span>Back Test</span>`;
+  } else if (!document.getElementById("view-tests").classList.contains("hidden")) {
+    html += ` &gt; <span>Test Tracker</span>`;
+  }
+  document.getElementById("breadcrumb").innerHTML = html;
+}
+
+function navTo(view, params = {}, skipPush = false) {
+  if (!skipPush) {
+    history.pushState({ view, params }, "", "");
+  }
+
+  if (view === 'home') {
+    currentMasterSubject = ""; currentMasterChapter = "";
+    currentMonth = ""; currentDayNum = null; currentDaySubject = ""; currentDayChapter = "";
+    renderTodayTargets();
+    renderUpcomingTestsHome();
+    renderBackTestsHome();
+  } else if (view === 'master-chapters') {
+    currentMasterSubject = params.subject || currentMasterSubject;
+    currentMasterChapter = "";
+    document.getElementById("master-subject-title").textContent = `📖 ${currentMasterSubject} Chapters`;
+    renderMasterChapters();
+  } else if (view === 'planner') {
+    currentMasterChapter = params.chapter || currentMasterChapter;
+    document.getElementById("planner-chapter-title").textContent = `📖 ${currentMasterChapter}`;
+    loadChapterTracker();
+  } else if (view === 'qp-subjects') {
+    currentQPSubject = ""; currentQPChapter = ""; currentQPExercise = "";
+  } else if (view === 'qp-chapters') {
+    currentQPSubject = params.subject || currentQPSubject; currentQPChapter = ""; currentQPExercise = "";
+    document.getElementById("qp-subject-title").textContent = `📝 ${currentQPSubject} - Chapters`;
+    qpRenderChapters();
+  } else if (view === 'qp-chapter-detail') {
+    currentQPChapter = params.chapter || currentQPChapter; currentQPExercise = "";
+    document.getElementById("qp-chapter-title").textContent = `📖 ${currentQPChapter} - Question Practice`;
+    qpRenderExercises();
+  } else if (view === 'qp-exercise') {
+    currentQPExercise = params.exercise || currentQPExercise;
+    const sections = qpNormalizeChapter();
+    const sectionName = sections[currentQPExercise] ? sections[currentQPExercise].name : currentQPExercise;
+    document.getElementById("qp-exercise-title").textContent = `📝 ${sectionName}`;
+    qpRenderRanges();
+  } else if (view === 'months') {
+    currentMonth = ""; currentDayNum = null; currentDaySubject = ""; currentDayChapter = "";
+    renderMonths();
+  } else if (view === 'month-days') {
+    currentMonth = params.month || currentMonth;
+    currentDayNum = null; currentDaySubject = ""; currentDayChapter = "";
+    document.getElementById("month-days-title").textContent = `📅 ${currentMonth} - Select Day`;
+    renderMonthDaysList();
+  } else if (view === 'day-subjects') {
+    currentDayNum = params.day !== undefined ? params.day : currentDayNum;
+    currentDaySubject = ""; currentDayChapter = "";
+    document.getElementById("day-subjects-title").textContent = `📅 ${currentMonth} > Day ${currentDayNum} - Select Subject`;
+    renderDaySubjectsList();
+  } else if (view === 'day-subject-chapters') {
+    currentDaySubject = params.subject || currentDaySubject;
+    currentDayChapter = "";
+    document.getElementById("day-subject-chapters-title").textContent = `📅 ${currentMonth} > Day ${currentDayNum} > ${currentDaySubject} (Chapters)`;
+    renderDaySubjectChaptersList();
+  } else if (view === 'chapter-detail') {
+    currentDayChapter = params.chapter || currentDayChapter;
+    document.getElementById("md-chapter-title").textContent = `📖 ${currentDayChapter}`;
+    loadChapterDetail();
+  } else if (view === 'tests') {
+    renderTests();
+  } else if (view === 'back-tests') {
+    renderBackTestsPage();
+  }
+
+  const views = ["home", "back-tests", "master-chapters", "planner", "qp-subjects", "qp-chapters", "qp-chapter-detail", "qp-exercise", "months", "month-days", "day-subjects", "day-subject-chapters", "chapter-detail", "tests"];
+  views.forEach(v => document.getElementById(`view-${v}`).classList.add("hidden"));
+  document.getElementById(`view-${view}`).classList.remove("hidden");
+
+  updateBreadcrumb();
+}
+
+if (!history.state) {
+  history.replaceState({ view: 'home', params: {} }, "", "");
+}
+
+window.addEventListener("popstate", (event) => {
+  if (event.state && event.state.view) {
+    navTo(event.state.view, event.state.params || {}, true);
+  } else {
+    navTo('home', {}, true);
+  }
+});
+
+function qpOpenSubject(subject) {
+  navTo('qp-chapters', { subject });
+}
+
+function qpOpenChapter(chapter) {
+  if (!currentQPSubject) return;
+  currentQPChapter = chapter;
+  navTo('qp-chapter-detail', { chapter: chapter });
+}
+
+function qpAddChapter() {
+  const input = document.getElementById('new-qp-chapter-name');
+  const name = input.value.trim();
+  if (!name) return;
+  if (!appData.questionPractice[currentQPSubject]) appData.questionPractice[currentQPSubject] = {};
+  if (appData.questionPractice[currentQPSubject][name]) {
+    alert('This chapter already exists.');
+    return;
+  }
+  appData.questionPractice[currentQPSubject][name] = {
+    sections: {
+      ex1: { name: 'Module Exercise 1', completed: false, locked: true },
+      ex2: { name: 'Module Exercise 2', completed: false, locked: true },
+      ex3: { name: 'Module Exercise 3', completed: false, locked: true },
+      race: { name: 'RACE', completed: false, locked: true }
+    }
+  };
+  input.value = '';
+  saveData();
+  qpRenderChapters();
+}
+
+function qpDeleteChapter(event, chapter) {
+  // Delete must never trigger the chapter-card navigation.
+  if (event) { event.preventDefault(); event.stopImmediatePropagation(); }
+  const subjectData = appData.questionPractice[currentQPSubject];
+  if (!subjectData || !Object.prototype.hasOwnProperty.call(subjectData, chapter)) {
+    qpRenderChapters();
+    return;
+  }
+  // Direct deletion keeps this reliable on mobile WebViews/file previews where confirm() can be unreliable.
+  delete subjectData[chapter];
+  if (currentQPChapter === chapter) currentQPChapter = '';
+  saveData();
+  qpRenderChapters();
+}
+
+function qpDeleteCurrentChapter(event) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  if (!currentQPChapter) return;
+  qpDeleteChapter(event, currentQPChapter);
+}
+
+function qpRenderChapters() {
+  const data = appData.questionPractice[currentQPSubject] || {};
+  const list = document.getElementById('qp-chapters-list');
+  if (!list) return;
+  const names = Object.keys(data).filter(name => name !== '0');
+  if (!names.length) {
+    list.innerHTML = '<div class="box"><div class="small">No Question Practice chapters added yet. Add a chapter above.</div></div>';
+    return;
+  }
+  list.innerHTML = '';
+  names.forEach((chapter, chapterIndex) => {
+    const card = document.createElement('div');
+    card.className = 'card qp-chapter-card soft-highlight-blue';
+    // Give every user-added chapter a clearly visible but very faint colored edge.
+    const chapterEdgeColors = [
+      'rgba(59,130,246,.42)',
+      'rgba(16,185,129,.42)',
+      'rgba(139,92,246,.42)',
+      'rgba(236,72,153,.38)',
+      'rgba(245,158,11,.42)',
+      'rgba(14,165,233,.42)'
+    ];
+    const chapterEdge = chapterEdgeColors[chapterIndex % chapterEdgeColors.length];
+    card.style.setProperty('border', `2px solid ${chapterEdge}`, 'important');
+    card.style.setProperty('box-shadow', `0 0 8px ${chapterEdge}`, 'important');
+    card.dataset.chapter = chapter;
+    card.innerHTML = `<span class="icon">📖</span><span>${escapeHtml(chapter)}</span>`;
+    card.addEventListener('click', () => qpOpenChapter(chapter));
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'delete-btn';
+    del.title = 'Delete chapter';
+    del.setAttribute('aria-label', 'Delete chapter');
+    del.textContent = '🗑';
+    del.addEventListener('click', (event) => qpDeleteChapter(event, chapter));
+    card.appendChild(del);
+    list.appendChild(card);
+  });
+}
+
+function qpNormalizeChapter() {
+  if (!appData.questionPractice[currentQPSubject]) appData.questionPractice[currentQPSubject] = {};
+  if (!appData.questionPractice[currentQPSubject][currentQPChapter]) {
+    appData.questionPractice[currentQPSubject][currentQPChapter] = { sections: {} };
+  }
+  const chapter = appData.questionPractice[currentQPSubject][currentQPChapter];
+  if (!chapter.sections) {
+    chapter.sections = {};
+    // Migrate the earlier version's exercise data if it exists.
+    if (chapter.exercises) {
+      const oldNames = { ex1: 'Module Exercise 1', ex2: 'Module Exercise 2', ex3: 'Module Exercise 3' };
+      Object.keys(chapter.exercises).forEach(id => {
+        chapter.sections[id] = { name: oldNames[id] || id, completed: !!chapter.exercises[id].completed, locked: true };
+      });
+      delete chapter.exercises;
+    }
+  }
+  const defaults = [
+    ['ex1', 'Module Exercise 1'],
+    ['ex2', 'Module Exercise 2'],
+    ['ex3', 'Module Exercise 3'],
+    ['race', 'RACE']
+  ];
+  defaults.forEach(([id, name]) => {
+    if (!chapter.sections[id]) chapter.sections[id] = { name, completed: false, locked: true };
+  });
+  return chapter.sections;
+}
+
+function qpToggleSection(id, event) {
+  if (event) event.stopPropagation();
+  const sections = qpNormalizeChapter();
+  if (!sections[id]) return;
+  sections[id].completed = !sections[id].completed;
+  saveData();
+  qpRenderExercises();
+}
+
+function qpOpenSection(id) {
+  const sections = qpNormalizeChapter();
+  if (!sections[id]) return;
+  currentQPExercise = id;
+  navTo('qp-exercise', { exercise: id });
+}
+
+function qpToggleAddSection() {
+  const panel = document.getElementById('qp-add-section-panel');
+  const input = document.getElementById('new-qp-section-name');
+  if (!panel) return;
+  panel.classList.toggle('hidden');
+  if (!panel.classList.contains('hidden') && input) input.focus();
+}
+
+function qpAddSection() {
+  const input = document.getElementById('new-qp-section-name');
+  const name = input ? input.value.trim() : '';
+  if (!name) return;
+  const sections = qpNormalizeChapter();
+  const duplicate = Object.values(sections).some(x => String(x.name).toLowerCase() === name.toLowerCase());
+  if (duplicate) {
+    alert('This section already exists.');
+    return;
+  }
+  const id = 'custom_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  sections[id] = { name, completed: false, locked: false };
+  input.value = '';
+  document.getElementById('qp-add-section-panel')?.classList.add('hidden');
+  saveData();
+  qpRenderExercises();
+}
+
+function qpDeleteSection(id, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+  }
+  const sections = qpNormalizeChapter();
+  if (!sections[id] || sections[id].locked) return;
+  delete sections[id];
+  saveData();
+  qpRenderExercises();
+}
+
+function qpRenderExercises() {
+  const sections = qpNormalizeChapter();
+  const list = document.getElementById('qp-exercises-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  Object.entries(sections).forEach(([id, item]) => {
+    const done = !!item.completed;
+    const bg = done ? '#0f5132' : '#881337';
+    const status = done ? '✓ Done' : '○ Pending';
+
+    const card = document.createElement('div');
+    card.className = 'card qp-section-card';
+    card.style.boxShadow = '0 0 7px rgba(59,130,246,.08)';
+    card.style.borderColor = bg;
+    card.dataset.sectionId = id;
+
+    const name = document.createElement('div');
+    name.className = 'qp-section-name';
+    name.innerHTML = `<span>📚</span><span>${escapeHtml(item.name)}</span>`;
+    card.appendChild(name);
+
+    if (!item.locked) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'delete-btn qp-section-delete';
+      del.title = 'Delete custom section';
+      del.setAttribute('aria-label', 'Delete custom section');
+      del.textContent = '🗑';
+      del.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); if (event.stopImmediatePropagation) event.stopImmediatePropagation(); qpDeleteSection(id, event); });
+      card.appendChild(del);
+    }
+
+    const statusBtn = document.createElement('button');
+    statusBtn.type = 'button';
+    statusBtn.className = 'qp-section-status';
+    statusBtn.style.background = bg;
+    statusBtn.textContent = status;
+    statusBtn.addEventListener('click', (event) => qpToggleSection(id, event));
+    card.appendChild(statusBtn);
+
+    card.addEventListener('click', () => qpOpenSection(id));
+    list.appendChild(card);
+  });
+}
+
+function qpGetExerciseData() {
+  const sections = qpNormalizeChapter();
+  const section = sections[currentQPExercise];
+  if (!section) return null;
+  if (!Array.isArray(section.ranges)) section.ranges = [];
+  return section;
+}
+
+let qpOpenRangeId = null;
+
+
+let qpTimerInterval = null;
+function qpFormatTime(sec){sec=Math.max(0,Math.floor(Number(sec)||0));const m=Math.floor(sec/60),s=sec%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+function qpTimerRemaining(r){if(!r?.timer)return 0;if(r.timer.running&&Number.isFinite(r.timer.endAt))return Math.max(0,Math.ceil((r.timer.endAt-Date.now())/1000));return Math.max(0,Math.floor(r.timer.remainingSec||0));}
+function qpUpdateTimerVisual(range, timerBox, timerDisplay, remaining){
+  if(!timerBox || !timerDisplay) return;
+  const danger = remaining < 60;
+  timerBox.classList.toggle('qp-timer-danger', danger);
+  timerDisplay.classList.toggle('qp-timer-danger', danger);
+}
+
+function qpTimerTick(){const sec=qpGetExerciseData();if(!sec)return;let active=false,changed=false;sec.ranges.forEach(r=>{if(!r.timer?.running)return;active=true;const rem=qpTimerRemaining(r);if(rem<=0){r.timer.remainingSec=0;r.timer.running=false;r.timer.endAt=null;changed=true;}const el=document.getElementById(`qp-timer-${r.id}`);if(el){el.textContent=qpFormatTime(rem);const box=el.closest('.qp-sticky-timer');qpUpdateTimerVisual(r,box,el,rem);}});if(changed){saveData();qpRenderRanges();}if(!active){clearInterval(qpTimerInterval);qpTimerInterval=null;}}
+function qpStartTimer(id,e){if(e){e.preventDefault();e.stopPropagation();}const r=qpGetRange(id);if(!r?.timer)return;let rem=qpTimerRemaining(r);if(rem<=0)rem=r.timer.durationSec||0;if(rem<=0)return;r.timer.remainingSec=rem;r.timer.endAt=Date.now()+rem*1000;r.timer.running=true;saveData();qpRenderRanges();if(!qpTimerInterval)qpTimerInterval=setInterval(qpTimerTick,250);}
+function qpPauseTimer(id,e){if(e){e.preventDefault();e.stopPropagation();}const r=qpGetRange(id);if(!r?.timer)return;r.timer.remainingSec=qpTimerRemaining(r);r.timer.running=false;r.timer.endAt=null;saveData();qpRenderRanges();if(!qpGetExerciseData().ranges.some(x=>x.timer?.running)){clearInterval(qpTimerInterval);qpTimerInterval=null;}}
+function qpResetTimer(id,e){if(e){e.preventDefault();e.stopPropagation();}const r=qpGetRange(id);if(!r?.timer)return;r.timer.running=false;r.timer.endAt=null;r.timer.remainingSec=r.timer.durationSec||0;saveData();qpRenderRanges();}
+
+function qpAddRange() {
+  const startEl = document.getElementById('qp-range-start');
+  const endEl = document.getElementById('qp-range-end');
+  const first = parseInt(startEl.value, 10);
+  const second = parseInt(endEl.value, 10);
+  if (!Number.isInteger(first) || !Number.isInteger(second) || first < 1 || second < 1) {
+    alert('Please enter a valid question range.'); return;
+  }
+
+  // Accept either input order and always normalize the range to ascending order.
+  const start = Math.min(first, second);
+  const end = Math.max(first, second);
+
+  const section = qpGetExerciseData(); if (!section) return;
+  if (section.ranges.some(r => r.start === start && r.end === end)) {
+    alert('This question range already exists.'); return;
+  }
+  // Overlapping ranges are permitted because they can represent separate practice sessions.
+  // Exact duplicates are blocked above; all saved answers remain isolated per range.
+  const timerMinutesEl=document.getElementById('qp-range-timer-minutes');
+  const timerMinutes=parseInt(timerMinutesEl?.value||'15',10);
+  if(!Number.isInteger(timerMinutes)||timerMinutes<1||timerMinutes>1440){alert('Please enter timer minutes between 1 and 1440.');return;}
+  const timerSec=timerMinutes*60;
+  const range = { id:'range_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), start, end, answers:{}, timer:{durationSec:timerSec,remainingSec:timerSec,running:false,endAt:null} };
+  section.ranges.push(range);
+  section.ranges.sort((a,b)=>a.start-b.start || a.end-b.end);
+  qpOpenRangeId = range.id;
+  startEl.value=''; endEl.value=''; if(timerMinutesEl) timerMinutesEl.value='15';
+  saveData(); qpRenderRanges();
+}
+
+function qpDeleteRange(rangeId, event) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  const section=qpGetExerciseData(); if (!section) return;
+  section.ranges=section.ranges.filter(r=>r.id!==rangeId);
+  if (qpOpenRangeId === rangeId) qpOpenRangeId = null;
+  saveData(); qpRenderRanges();
+}
+function qpGetRange(rangeId) { const section=qpGetExerciseData(); return section ? section.ranges.find(r=>r.id===rangeId) : null; }
+function qpSetAnswer(rangeId,q,type,option,event){
+  if(event){event.preventDefault();event.stopPropagation();}
+  const range=qpGetRange(rangeId); if(!range)return;
+  if(!range.answers)range.answers={};
+  if(!range.answers[q])range.answers[q]={my:'',correct:''};
+  // Once the Correct Answer is marked, the recorded My Answer is locked.
+  if(type==='my' && range.answers[q].correct) return;
+  // Tapping the already-selected option again clears it.
+  range.answers[q][type] = range.answers[q][type] === option ? '' : option;
+  qpOpenRangeId=rangeId;
+  saveData(); qpRenderRanges();
+}
+function qpRangeSummary(range){
+  let attempted=0,correct=0,wrong=0;
+  for(let q=range.start;q<=range.end;q++){
+    const a=range.answers?.[q];
+    if(a?.my){
+      attempted++;
+      if(a.correct){if(a.my===a.correct)correct++;else wrong++;}
+    }
+  }
+  return {attempted,correct,wrong,total:range.end-range.start+1};
+}
+function qpToggleRange(rangeId,event){
+  if(event){event.preventDefault();event.stopPropagation();}
+  qpOpenRangeId=qpOpenRangeId===rangeId?null:rangeId;
+  qpRenderRanges();
+}
+function qpToggleAnswerMode(rangeId,event){
+  if(event){event.preventDefault();event.stopPropagation();}
+  const range=qpGetRange(rangeId); if(!range)return;
+  range.answerMode = range.answerMode === 'correct' ? 'my' : 'correct';
+  qpOpenRangeId=rangeId;
+  saveData(); qpRenderRanges();
+}
+function qpRenderRanges(){
+  const list=document.getElementById('qp-ranges-list'); if(!list)return;
+  const section=qpGetExerciseData(); if(!section)return;
+  if(!section.ranges.length){qpOpenRangeId=null;list.innerHTML='<div class="box"><div class="small">No question range added yet. Add a range above.</div></div>';return;}
+  list.innerHTML='';
+  section.ranges.forEach(range=>{
+    if(!range.timer) range.timer={durationSec:900,remainingSec:900,running:false,endAt:null};
+    const sum=qpRangeSummary(range);
+    const isOpen=qpOpenRangeId===range.id;
+    const card=document.createElement('div'); card.className='qp-range-card';
+
+    const header=document.createElement('div');
+    header.className='qp-range-header';
+    header.setAttribute('role','button');
+    header.setAttribute('aria-expanded',String(isOpen));
+    header.addEventListener('click',e=>qpToggleRange(range.id,e));
+
+    const info=document.createElement('div'); info.style.cssText='min-width:0;flex:1;';
+    info.innerHTML=`<div class="qp-range-title">Questions ${range.start}–${range.end}</div><div class="qp-range-summary">Attempted ${sum.attempted}/${sum.total} · ✓ ${sum.correct} correct · ✕ ${sum.wrong} wrong</div>`;
+
+    const actions=document.createElement('div');
+    actions.style.cssText='display:flex;align-items:center;gap:7px;flex:0 0 auto;';
+    const del=document.createElement('button');
+    del.type='button'; del.className='delete-btn qp-range-delete'; del.title='Delete range'; del.textContent='🗑';
+    del.addEventListener('click',e=>qpDeleteRange(range.id,e));
+    const chev=document.createElement('span'); chev.className='qp-range-chevron'; chev.textContent=isOpen?'▲':'▼';
+    actions.appendChild(del); actions.appendChild(chev);
+    header.appendChild(info); header.appendChild(actions); card.appendChild(header);
+
+    if(isOpen){
+      const body=document.createElement('div'); body.className='qp-range-body';
+      const timerBox=document.createElement('div'); timerBox.className='qp-sticky-timer'; timerBox.style.cssText='background:#eff6ff;border:1px solid #93c5fd;border-radius:12px;padding:10px 12px;margin:4px 0 12px;';
+      const timerTop=document.createElement('div'); timerTop.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;';
+      const timerDisplay=document.createElement('strong'); timerDisplay.id=`qp-timer-${range.id}`; timerDisplay.className='qp-timer-display'; timerDisplay.style.cssText='font-size:22px;font-variant-numeric:tabular-nums;color:#1d4ed8;'; const initialTimerSec=qpTimerRemaining(range); timerDisplay.textContent=qpFormatTime(initialTimerSec); qpUpdateTimerVisual(range,timerBox,timerDisplay,initialTimerSec);
+      const timerBtns=document.createElement('div'); timerBtns.style.cssText='display:flex;gap:6px;';
+      const startBtn=document.createElement('button'); startBtn.type='button'; startBtn.textContent='▶ Start'; startBtn.style.width='auto'; startBtn.onclick=e=>qpStartTimer(range.id,e);
+      const pauseBtn=document.createElement('button'); pauseBtn.type='button'; pauseBtn.textContent='⏸ Pause'; pauseBtn.style.width='auto'; pauseBtn.onclick=e=>qpPauseTimer(range.id,e);
+      const resetBtn=document.createElement('button'); resetBtn.type='button'; resetBtn.textContent='↻ Reset'; resetBtn.style.width='auto'; resetBtn.onclick=e=>qpResetTimer(range.id,e);
+      timerBtns.append(startBtn,pauseBtn,resetBtn); timerTop.append(timerDisplay,timerBtns); timerBox.appendChild(timerTop);
+      const timerStatus=document.createElement('div'); timerStatus.className='small'; timerStatus.style.marginTop='5px'; timerStatus.textContent=range.timer.running?'Running':'Paused — press Start to begin'; timerBox.appendChild(timerStatus); body.appendChild(timerBox);
+      const modeLine=document.createElement('div');
+      modeLine.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0 10px;';
+      const modeText=document.createElement('div'); modeText.className='small';
+      modeText.textContent=range.answerMode==='correct'?'ON: tap an option to mark the Correct Answer':'OFF: tap an option to mark My Answer';
+      const modeWrap=document.createElement('div'); modeWrap.className='qp-answer-mode';
+      const modeBtn=document.createElement('button'); modeBtn.type='button'; modeBtn.className='qp-answer-toggle '+(range.answerMode==='correct'?'on':'off');
+      modeBtn.textContent=range.answerMode==='correct'?'ON · Correct':'OFF · My Answer';
+      modeBtn.setAttribute('aria-pressed',String(range.answerMode==='correct'));
+      modeBtn.addEventListener('click',e=>qpToggleAnswerMode(range.id,e));
+      modeWrap.appendChild(modeBtn); modeLine.appendChild(modeText); modeLine.appendChild(modeWrap); body.appendChild(modeLine);
+
+      const rows=document.createElement('div');
+      for(let q=range.start;q<=range.end;q++){
+        const a=range.answers?.[q]||{my:'',correct:''};
+        const row=document.createElement('div'); row.className='qp-question-row';
+        const title=document.createElement('div'); title.className='qp-question-number'; title.textContent='Q'+q; row.appendChild(title);
+        const buttons=document.createElement('div'); buttons.className='qp-answer-buttons';
+        ['A','B','C','D'].forEach(opt=>{
+          const b=document.createElement('button'); b.type='button'; b.className='qp-answer-button'; b.textContent=opt;
+          const my=a.my===opt, corr=a.correct===opt;
+          if(my && corr){b.style.background='#16a34a';b.style.color='#fff';b.style.borderColor='#16a34a';b.textContent=opt+' ✓';}
+          else if(my && a.correct && a.my!==a.correct){b.style.background='#dc2626';b.style.color='#fff';b.style.borderColor='#dc2626';b.textContent=opt+' ✕';}
+          else if(my){b.style.background='#2563eb';b.style.color='#fff';b.style.borderColor='#2563eb';}
+          else if(corr){
+            // Correct answer marked without a My Answer: show it differently from
+            // a genuinely attempted-and-correct question, so skipped questions
+            // cannot be confused with answered questions.
+            b.style.background='#dcfce7';
+            b.style.color='#166534';
+            b.style.borderColor='#16a34a';
+            b.style.boxShadow='inset 0 0 0 1px rgba(22,163,74,.18)';
+            b.textContent=opt+' ✓';
+            b.title='Correct answer marked — question not attempted';
+            b.setAttribute('aria-label',opt+' correct answer marked, not attempted');
+          }
+          const myAnswerLocked = !!a.correct;
+          if(myAnswerLocked && range.answerMode!=='correct'){
+            b.disabled=true;
+            b.style.cursor='not-allowed';
+            b.style.opacity='1';
+            b.title='My Answer locked after Correct Answer was marked';
+          }
+          b.addEventListener('click',e=>{
+            const mode=range.answerMode==='correct'?'correct':'my';
+            qpSetAnswer(range.id,q,mode,opt,e);
+          });
+          buttons.appendChild(b);
+        });
+        row.appendChild(buttons); rows.appendChild(row);
+      }
+      body.appendChild(rows); card.appendChild(body);
+    }
+    list.appendChild(card);
+  });
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+
+function openMasterSubject(subject) {
+  navTo('master-chapters', { subject });
+}
+
+function getMasterChapterCompletion(key) {
+  let tracker = appData.chapterTrackers[key];
+  if (!tracker || !tracker.tasks || tracker.tasks.length === 0) return { pct: 0, doneCount: 0, totalCount: 0 };
+  let totalCount = 0;
+  let doneCount = 0;
+  tracker.tasks.forEach(t => {
+    if (t.id === 'teq_group') {
+      let count = parseInt(t.teqCount) || 1;
+      let teqStatus = t.teqStatus || {};
+      totalCount += count;
+      for (let i = 1; i <= count; i++) {
+        if (teqStatus[`teq_${i}`]) doneCount++;
+      }
+    } else {
+      totalCount++;
+      if (t.completed) doneCount++;
+    }
+  });
+  let pct = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+  return { pct, doneCount, totalCount };
+}
+
+function renderMasterChapters() {
+  let list = appData.masterSubjects[currentMasterSubject] || [];
+  let html = "";
+  list.forEach(c => {
+    let key = `${currentMasterSubject}_${c}`;
+    let comp = getMasterChapterCompletion(key);
+    let statusBadge = "";
+    let fillColor = "#881337";
+    if (comp.pct === 100) {
+      statusBadge = `<span class="card-status status-completed">✅ Completed (${comp.pct}%)</span>`;
+      fillColor = "#0f5132";
+    } else if (comp.pct >= 50) {
+      statusBadge = `<span class="card-status status-progress">⚡ In Progress (${comp.pct}%)</span>`;
+      fillColor = "#b45309";
+    } else {
+      statusBadge = `<span class="card-status status-pending">🚨 Incomplete (${comp.pct}%)</span>`;
+      fillColor = "#881337";
+    }
+    html += `<div class="card" onclick="selectMasterChapter('${c}')" style="border-color:${fillColor};">
+      <button class="delete-btn" onclick="deleteMasterChapter(event, '${c}')" title="Delete">🗑️</button>
+      <span class="icon">📖</span>
+      <div style="margin-top:2px;">${c}</div>
+      ${statusBadge}
+      <div class="card-progress-bar">
+        <div class="card-progress-fill" style="width:${comp.pct}%; background:${fillColor};"></div>
+      </div>
+      <div style="font-size:11px; color:#64748b; margin-top:2px;">${comp.doneCount}/${comp.totalCount} Done</div>
+    </div>`;
+  });
+  document.getElementById("master-chapters-list").innerHTML = html || "<p class='small'>No chapters added yet.</p>";
+}
+
+function addMasterChapter() {
+  let name = document.getElementById("new-master-chapter-name").value.trim();
+  if (!name) return;
+  if (!appData.masterSubjects[currentMasterSubject]) appData.masterSubjects[currentMasterSubject] = [];
+  if (!appData.masterSubjects[currentMasterSubject].includes(name)) {
+    appData.masterSubjects[currentMasterSubject].push(name);
+    saveData();
+  }
+  document.getElementById("new-master-chapter-name").value = "";
+  renderMasterChapters();
+}
+
+function deleteMasterChapter(event, chapterName) {
+  event.stopPropagation();
+  if (appData.masterSubjects[currentMasterSubject]) {
+    appData.masterSubjects[currentMasterSubject] = appData.masterSubjects[currentMasterSubject].filter(c => c !== chapterName);
+    delete appData.chapterTrackers[`${currentMasterSubject}_${chapterName}`];
+    saveData();
+    renderMasterChapters();
+  }
+}
+
+function selectMasterChapter(c) {
+  navTo('planner', { chapter: c });
+}
+
+function getChapterKey() {
+  return `${currentMasterSubject}_${currentMasterChapter}`;
+}
+
+function getDefaultTasks() {
+  let defaultList = [
+    { id: 'm_ex1', group: 'Module', name: 'Module - Exercise 1', completed: false },
+    { id: 'm_ex2', group: 'Module', name: 'Module - Exercise 2', completed: false },
+    { id: 'm_ex3', group: 'Module', name: 'Module - Exercise 3', completed: false },
+    { id: 'race', group: 'Practice', name: 'RACE Sheet', completed: false },
+    { id: 'teq_group', group: 'Practice', name: 'TEQ Sheets', teqCount: 1, teqStatus: { 'teq_1': false } }
+  ];
+  const pyqYears = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+  pyqYears.forEach(year => {
+    defaultList.push({ id: `pyq_${year}`, group: 'PYQ', year: year, name: `PYQ ${year}`, totalQs: '', doneQs: '', completed: false });
+  });
+  if (currentMasterSubject === 'Physics' || currentMasterSubject === 'Chemistry') {
+    const jeeYears = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027];
+    jeeYears.forEach(year => {
+      defaultList.push({ id: `jee_jan_${year}`, group: 'JEE_Main', year: year, attempt: 'Jan', name: `JEE Main ${year} (Jan Attempt)`, totalQs: '', doneQs: '', completed: false });
+      defaultList.push({ id: `jee_apr_${year}`, group: 'JEE_Main', year: year, attempt: 'April', name: `JEE Main ${year} (April Attempt)`, totalQs: '', doneQs: '', completed: false });
+    });
+  }
+  return defaultList;
+}
+
+function loadChapterTracker() {
+  let key = getChapterKey();
+  if (!appData.chapterTrackers[key]) {
+    appData.chapterTrackers[key] = { tasks: getDefaultTasks() };
+    saveData();
+  }
+  renderChapterTrackerUI();
+}
+
+function renderChapterTrackerUI() {
+  let key = getChapterKey();
+  let tasks = appData.chapterTrackers[key].tasks || [];
+  let moduleTasks = tasks.filter(t => t.group === 'Module');
+  let practiceTasks = tasks.filter(t => t.group === 'Practice');
+  let pyqTasks = tasks.filter(t => t.group === 'PYQ');
+  let jeeTasks = tasks.filter(t => t.group === 'JEE_Main');
+  let customTasks = tasks.filter(t => t.group === 'Custom');
+  let html = "";
+
+  if (moduleTasks.length > 0) {
+    html += `<div class="section-card"><h4>📦 Module Exercises</h4>`;
+    moduleTasks.forEach(t => {
+      html += `<label class="task-item ${t.completed ? 'done' : ''}">
+        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+        <span>${t.name}</span>
+      </label>`;
+    });
+    html += `</div>`;
+  }
+
+  if (practiceTasks.length > 0) {
+    html += `<div class="section-card"><h4>🎯 Practice Sheets</h4>`;
+    practiceTasks.forEach(t => {
+      if (t.id === 'teq_group') {
+        let count = parseInt(t.teqCount) || 1;
+        let teqStatus = t.teqStatus || {};
+        let teqCheckboxesHtml = "";
+        for (let i = 1; i <= count; i++) {
+          let isChecked = teqStatus[`teq_${i}`] || false;
+          teqCheckboxesHtml += `
+            <label style="display:inline-flex; align-items:center; gap:4px; background:var(--section-bg, #fdfbf7); padding:4px 8px; border-radius:6px; border:1px solid #cbd5e1; cursor:pointer; font-weight:bold; font-size:12px; color:#1e293b;">
+              <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleTeqSubTask(${i})">
+              <span>TEQ ${i}</span>
+            </label>
+          `;
+        }
+        html += `
+        <div style="background:var(--box-bg, #f3eedf); border:1px solid #e1dacb; border-radius:10px; padding:10px; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <span style="font-weight:bold; color:#1e293b; font-size:14px;">📝 TEQ Sheets Range</span>
+            <div style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:bold;">
+              <span>Total Sheets:</span>
+              <input type="number" min="1" max="10" value="${count}" style="width:50px; padding:3px 6px; text-align:center; margin:0;" onchange="updateTeqCount(this.value)">
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            ${teqCheckboxesHtml}
+          </div>
+        </div>`;
+      } else {
+        html += `<label class="task-item ${t.completed ? 'done' : ''}">
+          <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+          <span>${t.name}</span>
+        </label>`;
+      }
+    });
+    html += `</div>`;
+  }
+
+  if (pyqTasks.length > 0) {
+    html += `<div class="section-card"><h4>📜 Standard PYQs</h4>`;
+    pyqTasks.forEach(t => {
+      html += `<div class="pyq-item ${t.completed ? 'done' : ''}">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+          <span style="font-weight:bold;">${t.name}</span>
+        </div>
+        <div class="pyq-inputs">
+          <span>Done:</span>
+          <input type="number" min="0" placeholder="0" value="${t.doneQs || ''}" oninput="updatePyqCount('${t.id}', 'doneQs', this.value)">
+          <span>/ Tot:</span>
+          <input type="number" min="0" placeholder="0" value="${t.totalQs || ''}" oninput="updatePyqCount('${t.id}', 'totalQs', this.value)">
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (jeeTasks.length > 0 && (currentMasterSubject === 'Physics' || currentMasterSubject === 'Chemistry')) {
+    html += `<div class="section-card" style="border-color:#3b82f6; background:#eef6ff;">
+      <h4 style="color:#1d4ed8;">⚡ JEE Mains Questions</h4>`;
+    jeeTasks.forEach(t => {
+      html += `<div class="pyq-item ${t.completed ? 'done' : ''}" style="background:var(--section-bg, #fdfbf7);">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+          <span style="font-weight:bold; color:#1e293b;">${t.name}</span>
+        </div>
+        <div class="pyq-inputs">
+          <span>Done:</span>
+          <input type="number" min="0" placeholder="0" value="${t.doneQs || ''}" oninput="updatePyqCount('${t.id}', 'doneQs', this.value)">
+          <span>/ Tot:</span>
+          <input type="number" min="0" placeholder="0" value="${t.totalQs || ''}" oninput="updatePyqCount('${t.id}', 'totalQs', this.value)">
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (customTasks.length > 0) {
+    html += `<div class="section-card"><h4>✨ Additional Tasks</h4>`;
+    customTasks.forEach(t => {
+      html += `<div class="task-item ${t.completed ? 'done' : ''}">
+        <label style="display:flex; align-items:center; gap:10px; flex:1; cursor:pointer;">
+          <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+          <span>${t.name}</span>
+        </label>
+        <button class="delete-btn" style="position:static;" onclick="deleteCustomTask('${t.id}')">🗑️</button>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById("chapter-tasks-container").innerHTML = html;
+  let comp = getMasterChapterCompletion(key);
+  document.getElementById("chapter-pct").textContent = comp.pct + "%";
+  document.getElementById("chapter-bar").style.width = comp.pct + "%";
+  document.getElementById("chapter-count").textContent = `${comp.doneCount} of ${comp.totalCount} items completed`;
+}
+
+function toggleTask(taskId) {
+  let key = getChapterKey();
+  let tasks = appData.chapterTrackers[key].tasks;
+  let task = tasks.find(t => t.id === taskId);
+  if (task) {
+    task.completed = !task.completed;
+    saveData();
+    renderChapterTrackerUI();
+  }
+}
+
+function updateTeqCount(val) {
+  let count = parseInt(val) || 1;
+  if (count < 1) count = 1;
+  let key = getChapterKey();
+  let tasks = appData.chapterTrackers[key].tasks;
+  let teqTask = tasks.find(t => t.id === 'teq_group');
+  if (teqTask) {
+    teqTask.teqCount = count;
+    if (!teqTask.teqStatus) teqTask.teqStatus = {};
+    saveData();
+    renderChapterTrackerUI();
+  }
+}
+
+function toggleTeqSubTask(index) {
+  let key = getChapterKey();
+  let tasks = appData.chapterTrackers[key].tasks;
+  let teqTask = tasks.find(t => t.id === 'teq_group');
+  if (teqTask) {
+    if (!teqTask.teqStatus) teqTask.teqStatus = {};
+    teqTask.teqStatus[`teq_${index}`] = !teqTask.teqStatus[`teq_${index}`];
+    saveData();
+    renderChapterTrackerUI();
+  }
+}
+
+function updatePyqCount(taskId, field, val) {
+  let key = getChapterKey();
+  let tasks = appData.chapterTrackers[key].tasks;
+  let task = tasks.find(t => t.id === taskId);
+  if (task) {
+    task[field] = val;
+    saveData();
+  }
+}
+
+function addCustomTask() {
+  let input = document.getElementById("new-task-name");
+  let name = input.value.trim();
+  if (!name) return;
+  let key = getChapterKey();
+  appData.chapterTrackers[key].tasks.push({ id: 'custom_' + Date.now(), group: 'Custom', name: name, completed: false });
+  saveData();
+  input.value = "";
+  renderChapterTrackerUI();
+}
+
+function deleteCustomTask(taskId) {
+  let key = getChapterKey();
+  appData.chapterTrackers[key].tasks = appData.chapterTrackers[key].tasks.filter(t => t.id !== taskId);
+  saveData();
+  renderChapterTrackerUI();
+}
+
+function renderMonths() {
+  let html = "";
+  const nowObj = new Date();
+  const currentRealMonth = months[nowObj.getMonth()];
+  months.forEach(m => {
+    let icon = monthIcons[m] || "📅";
+    const isCurrentMonth = m === currentRealMonth;
+    const softMonthColors = [
+      "rgba(59,130,246,.38)","rgba(16,185,129,.38)","rgba(139,92,246,.38)",
+      "rgba(236,72,153,.34)","rgba(245,158,11,.38)","rgba(14,165,233,.38)",
+      "rgba(20,184,166,.38)","rgba(99,102,241,.38)","rgba(234,88,12,.34)",
+      "rgba(168,85,247,.38)","rgba(6,182,212,.38)","rgba(34,197,94,.38)"
+    ];
+    const softMonthColor = softMonthColors[months.indexOf(m) % softMonthColors.length];
+    const highlightStyle = isCurrentMonth
+      ? "box-shadow:0 0 12px 3px rgba(37,99,235,.45);border:2px solid #2563eb !important;background:#eff6ff !important;position:relative;"
+      : `border:2px solid ${softMonthColor};box-shadow:0 0 7px ${softMonthColor};`;
+    html += `<div class="card" style="${highlightStyle}" onclick="selectMonth('${m}')"><span class="icon">${icon}</span>${m}</div>`;
+  });
+  document.getElementById("months-list").innerHTML = html;
+}
+
+function selectMonth(m) {
+  navTo('month-days', { month: m });
+}
+
+function selectDay(d) {
+  navTo('day-subjects', { day: d });
+}
+
+function isTestDaySelectionEnabled(monthName) {
+  if (!appData.testDayMonthEnabled) appData.testDayMonthEnabled = {};
+  // Existing months remain enabled by default so the new control does not break old data.
+  return appData.testDayMonthEnabled[monthName] !== false;
+}
+
+function toggleMonthTestDay(event, monthName) {
+  event.stopPropagation();
+  if (!appData.testDayMonthEnabled) appData.testDayMonthEnabled = {};
+  appData.testDayMonthEnabled[monthName] = !isTestDaySelectionEnabled(monthName);
+  saveData();
+  renderMonthDaysList();
+}
+
+function toggleTestDay(event, monthName, dayNum) {
+  event.stopPropagation();
+  if (!isTestDaySelectionEnabled(monthName)) return;
+
+  let key = `${monthName}_${dayNum}`;
+  if (!appData.testDays) appData.testDays = {};
+  if (!appData.testDayNames) appData.testDayNames = {};
+
+  if (appData.testDays[key]) {
+    openTestNameDialog(monthName, dayNum, appData.testDayNames[key] || '');
+  } else {
+    openTestNameDialog(monthName, dayNum, '', true);
+  }
+}
+
+function toggleTestChapterRow(checkbox) {
+  const row = checkbox.closest('.test-chapter-row');
+  if (!row) return;
+  if (checkbox.checked) {
+    row.style.background = '#dcfce7';
+    row.style.borderColor = '#86efac';
+    row.style.color = '#166534';
+  } else {
+    row.style.background = '#fee2e2';
+    row.style.borderColor = '#fca5a5';
+    row.style.color = '#991b1b';
+  }
+
+  // Save chapter completion immediately so checking/unchecking a chapter
+  // from the Home screen or Test Day popup is not lost when the dialog closes.
+  const overlay = document.getElementById('test-name-dialog-overlay');
+  const input = document.getElementById('test-name-dialog-input');
+  if (overlay && input && window.__activeTestDayKey) {
+    appData.testDayChapters = appData.testDayChapters || {};
+    appData.testDayChapters[window.__activeTestDayKey] = collectTestDayChapters();
+    saveData();
+    renderUpcomingTestsHome();
+  }
+}
+function addTestChapterRow(subject, name = '', done = false) {
+  const container = document.getElementById(`test-chapters-${subject}`);
+  if (!container) return;
+  const empty = container.querySelector('.test-chapters-empty');
+  if (empty) empty.remove();
+
+  const row = document.createElement('div');
+  row.className = 'test-chapter-row';
+  row.style.background = done ? '#dcfce7' : '#fee2e2';
+  row.style.borderColor = done ? '#86efac' : '#fca5a5';
+  row.style.color = done ? '#166534' : '#991b1b';
+  row.innerHTML = `
+    <input type="checkbox" class="test-chapter-check" ${done ? 'checked' : ''}
+      aria-label="Mark chapter complete"
+      onchange="toggleTestChapterRow(this)">
+    <input type="text" class="test-chapter-input" value="${escapeHtml(name)}"
+      placeholder="Enter chapter name..." maxlength="80" aria-label="${subject} chapter name">
+    <button type="button" class="test-chapter-remove" title="Remove chapter" aria-label="Remove chapter">×</button>`;
+  row.querySelector('.test-chapter-remove').onclick = () => {
+    row.remove();
+    ensureTestChapterEmptyState(subject);
+  };
+  container.appendChild(row);
+
+  const input = row.querySelector('.test-chapter-input');
+  setTimeout(() => input?.focus(), 0);
+}
+
+function ensureTestChapterEmptyState(subject) {
+  const container = document.getElementById(`test-chapters-${subject}`);
+  if (!container) return;
+  if (!container.querySelector('.test-chapter-row')) {
+    const empty = document.createElement('div');
+    empty.className = 'test-chapters-empty';
+    empty.textContent = 'No chapters added yet — tap + to add one.';
+    container.appendChild(empty);
+  }
+}
+
+function collectTestDayChapters() {
+  const data = {};
+  ['Physics', 'Chemistry', 'Biology'].forEach(subject => {
+    data[subject] = [];
+    const container = document.getElementById(`test-chapters-${subject}`);
+    if (!container) return;
+    container.querySelectorAll('.test-chapter-row').forEach(row => {
+      const input = row.querySelector('.test-chapter-input');
+      const check = row.querySelector('.test-chapter-check');
+      const name = (input?.value || '').trim();
+      if (name) data[subject].push({ name, done: !!check?.checked });
+    });
+  });
+  return data;
+}
+
+function openTestNameDialog(monthName, dayNum, currentName = '', isNew = false) {
+  closeTestNameDialog();
+  if (!appData.testDayChapters) appData.testDayChapters = {};
+  const key = `${monthName}_${dayNum}`;
+  window.__activeTestDayKey = key;
+  const savedChapters = appData.testDayChapters[key] || {};
+  const subjects = ['Physics', 'Chemistry', 'Biology'];
+  const subjectIcons = { Physics:'⚡', Chemistry:'🧪', Biology:'🌿' };
+
+  const overlay = document.createElement('div');
+  overlay.id = 'test-name-dialog-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;overflow:auto;';
+  overlay.innerHTML = `
+    <div role="dialog" aria-modal="true" style="width:min(470px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+      <div style="font-size:17px;font-weight:900;color:#0f172a;margin-bottom:4px;">🎯 ${isNew ? 'Select Test Day' : 'Edit Test Day'}</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:12px;">${monthName} — Day ${dayNum}</div>
+      <label style="display:block;font-size:13px;font-weight:800;color:#334155;">Test Name
+        <input id="test-name-dialog-input" type="text" maxlength="60" value="${escapeHtml(currentName)}" placeholder="e.g. Minor Test 1 / Major Test 1" style="width:100%;box-sizing:border-box;margin-top:7px;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none;">
+      </label>
+      <div style="margin-top:15px;padding:12px;border:1px solid #dbeafe;border-radius:14px;background:#f8fbff;">
+        <div style="font-size:14px;font-weight:900;color:#1e3a8a;margin-bottom:4px;">📚 Test Chapters</div>
+        <div style="font-size:11px;color:#64748b;margin-bottom:10px;">Add the chapters included in this test. Tick a chapter when you finish it — completed chapters turn green.</div>
+        ${subjects.map(subject => `
+          <div class="test-chapter-subject-box">
+            <div class="test-chapter-subject-head">
+              <div class="test-chapter-subject-title">${subjectIcons[subject]} ${subject}</div>
+              <button type="button" class="test-chapter-add-btn" data-subject="${subject}" title="Add ${subject} chapter" aria-label="Add ${subject} chapter">+</button>
+            </div>
+            <div id="test-chapters-${subject}" class="test-chapters-container"></div>
+          </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;flex-wrap:wrap;">
+        ${!isNew ? '<button type="button" id="test-name-delete" style="background:#dc2626;color:#fff;border:none;border-radius:9px;padding:9px 12px;font-weight:800;cursor:pointer;">Remove Test</button>' : ''}
+        <button type="button" id="test-name-cancel" style="background:#e2e8f0;color:#1e293b;border:none;border-radius:9px;padding:9px 14px;font-weight:800;cursor:pointer;">Cancel</button>
+        <button type="button" id="test-name-save" style="background:#16a34a;color:#fff;border:none;border-radius:9px;padding:9px 14px;font-weight:800;cursor:pointer;">${isNew ? 'Select Test Day' : 'Save Test'}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  subjects.forEach(subject => {
+    const existing = Array.isArray(savedChapters[subject]) ? savedChapters[subject] : [];
+    if (existing.length) existing.forEach(ch => addTestChapterRow(subject, ch.name || '', !!ch.done));
+    else ensureTestChapterEmptyState(subject);
+  });
+  overlay.querySelectorAll('.test-chapter-add-btn').forEach(btn => {
+    btn.onclick = () => addTestChapterRow(btn.dataset.subject);
+  });
+
+  const input = document.getElementById('test-name-dialog-input');
+  setTimeout(() => { input.focus(); input.select(); }, 0);
+  document.getElementById('test-name-dialog-cancel')?.remove();
+  document.getElementById('test-name-cancel').onclick = closeTestNameDialog;
+  const del = document.getElementById('test-name-delete');
+  if (del) del.onclick = () => {
+    delete appData.testDays[key];
+    delete appData.testDayNames[key];
+    delete appData.testDayChapters[key];
+    delete appData.testDayCompleted[key];
+    if (appData.testDayPreCompletion) delete appData.testDayPreCompletion[key];
+    saveData();
+    closeTestNameDialog();
+    renderMonthDaysList();
+    renderUpcomingTestsHome();
+    renderBackTestsHome();
+  };
+  document.getElementById('test-name-save').onclick = () => {
+    const name = input.value.trim();
+    if (!name) {
+      input.focus();
+      input.style.borderColor = '#dc2626';
+      return;
+    }
+    appData.testDays[key] = true;
+    appData.testDayNames[key] = name;
+    appData.testDayChapters[key] = collectTestDayChapters();
+    saveData();
+    closeTestNameDialog();
+    renderMonthDaysList();
+    renderUpcomingTestsHome();
+    renderBackTestsHome();
+  };
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeTestNameDialog(); });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('test-name-save').click(); if (e.key === 'Escape') closeTestNameDialog(); });
+}
+
+function closeTestNameDialog() {
+  const old = document.getElementById('test-name-dialog-overlay');
+  if (old) old.remove();
+}
+
+function selectDaySubject(subj) {
+  navTo('day-subject-chapters', { subject: subj });
+}
+
+function getDaySubjectKey() {
+  return `${currentMonth}_Day${currentDayNum}_${currentDaySubject}`;
+}
+
+function getDayChapterDetailKey(chapterName) {
+  let ch = chapterName || currentDayChapter;
+  return `${currentMonth}_${currentDaySubject}_${ch}`;
+}
+
+const monthIndices = {
+  "January": 0, "February": 1, "March": 2, "April": 3,
+  "May": 4, "June": 5, "July": 6, "August": 7,
+  "September": 8, "October": 9, "November": 10, "December": 11
+};
+
+function getAbsoluteDayNumber(monthName, dayNum, year = new Date().getFullYear()) {
+  const mIdx = monthIndices[monthName] !== undefined ? monthIndices[monthName] : 0;
+  const safeDay = Math.max(1, parseInt(dayNum) || 1);
+  let abs = safeDay;
+  for (let i = 0; i < mIdx; i++) {
+    const mStr = months[i];
+    let days = monthDaysCount[mStr] || 30;
+    if (mStr === 'February' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) days = 29;
+    abs += days;
+  }
+  return abs;
+}
+
+function isChapterCompletedForDay(chapterName) {
+  let detailKey = getDayChapterDetailKey(chapterName);
+  let d = appData.dayChapterDetails[detailKey];
+  if (!d || !d.dayData || d.dayData.length === 0) return false;
+  let startAbs = getAbsoluteDayNumber(d.startMonth || currentMonth, parseInt(d.startDay) || currentDayNum);
+  let currentAbs = getAbsoluteDayNumber(currentMonth, currentDayNum);
+  let targetSubDayIndex = currentAbs - startAbs;
+  if (targetSubDayIndex >= 0 && targetSubDayIndex < d.dayData.length) {
+    return !!d.dayData[targetSubDayIndex].completed;
+  }
+  return false;
+}
+
+function getChaptersForDaySubject(month, dayNum, subjectName) {
+  let list = [];
+  let tempSubjKey = `${month}_Day${dayNum}_${subjectName}`;
+  if (appData.daySubjectChapters[tempSubjKey]) {
+    appData.daySubjectChapters[tempSubjKey].forEach(c => {
+      if (!list.includes(c)) list.push(c);
+    });
+  }
+  if (appData.dayChapterDetails) {
+    let targetAbs = getAbsoluteDayNumber(month, dayNum);
+    Object.keys(appData.dayChapterDetails).forEach(k => {
+      if (k.startsWith(`${month}_${subjectName}_`) || k.includes(`_${subjectName}_`)) {
+        let detail = appData.dayChapterDetails[k];
+        if (detail && detail.startDay) {
+          let sMonth = detail.startMonth || month;
+          let startAbs = getAbsoluteDayNumber(sMonth, parseInt(detail.startDay) || 1);
+          let totalAllotted = parseInt(detail.days) || 1;
+          if (targetAbs >= startAbs && targetAbs < startAbs + totalAllotted) {
+            let parts = k.split("_");
+            let chName = parts.slice(2).join("_");
+            if (!list.includes(chName)) list.push(chName);
+          }
+        }
+      }
+    });
+  }
+  return list;
+}
+
+function isSubjectCompletedForDay(month, dayNum, subjectName) {
+  let chapters = getChaptersForDaySubject(month, dayNum, subjectName);
+  if (chapters.length === 0) return false;
+  let allDone = true;
+  let targetAbs = getAbsoluteDayNumber(month, dayNum);
+  chapters.forEach(c => {
+    let detailKey = `${month}_${subjectName}_${c}`;
+    let d = appData.dayChapterDetails[detailKey];
+    if (!d) {
+      Object.keys(appData.dayChapterDetails).forEach(k => {
+        if (k.endsWith(`_${subjectName}_${c}`)) {
+          d = appData.dayChapterDetails[k];
+        }
+      });
+    }
+    if (!d || !d.dayData || d.dayData.length === 0) {
+      allDone = false;
+      return;
+    }
+    let startAbs = getAbsoluteDayNumber(d.startMonth || month, parseInt(d.startDay) || dayNum);
+    let idx = targetAbs - startAbs;
+    if (idx < 0 || idx >= d.dayData.length || !d.dayData[idx].completed) {
+      allDone = false;
+    }
+  });
+  return allDone;
+}
+
+function isDayFullyCompleted(month, dayNum) {
+  let subjects = ["Physics", "Chemistry", "Biology"];
+  let hasAnyContent = false;
+  let allDone = true;
+
+  subjects.forEach(subj => {
+    let chapters = getChaptersForDaySubject(month, dayNum, subj);
+    if (chapters.length > 0) {
+      hasAnyContent = true;
+      if (!isSubjectCompletedForDay(month, dayNum, subj)) {
+        allDone = false;
+      }
+    }
+  });
+
+  return hasAnyContent && allDone;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[ch]));
+}
+
+function getTodayTargetEntries() {
+  const now = new Date();
+  const month = months[now.getMonth()];
+  const dayNum = now.getDate();
+  const subjects = ["Physics", "Chemistry", "Biology"];
+  const entries = [];
+
+  subjects.forEach(subjectName => {
+    const chapters = getChaptersForDaySubject(month, dayNum, subjectName);
+    chapters.forEach(chapterName => {
+      const requestedDetailKey = `${month}_${subjectName}_${chapterName}`;
+      let resolvedDetailKey = requestedDetailKey;
+      let detail = appData.dayChapterDetails?.[requestedDetailKey];
+
+      if (!detail && appData.dayChapterDetails) {
+        Object.keys(appData.dayChapterDetails).some(k => {
+          if (k.endsWith(`_${subjectName}_${chapterName}`)) {
+            detail = appData.dayChapterDetails[k];
+            resolvedDetailKey = k;
+            return true;
+          }
+          return false;
+        });
+      }
+
+      if (!detail || !Array.isArray(detail.dayData) || !detail.dayData.length) return;
+
+      const startAbs = getAbsoluteDayNumber(
+        detail.startMonth || month,
+        parseInt(detail.startDay) || dayNum
+      );
+      const todayAbs = getAbsoluteDayNumber(month, dayNum);
+      const dayIndex = todayAbs - startAbs;
+      if (dayIndex < 0 || dayIndex >= detail.dayData.length) return;
+
+      const dayData = detail.dayData[dayIndex] || {};
+      syncSubDayCompletion(detail, dayData);
+      const completed = !!dayData.completed;
+      const ranges = dayData.ranges || {};
+      const categoryCompleted = dayData.categoryCompleted || {};
+      const categoryItems = Object.entries(ranges)
+        .map(([categoryName, value]) => ({
+          categoryName: String(categoryName ?? '').trim(),
+          value: String(value ?? '').trim(),
+          completed: !!categoryCompleted[String(categoryName ?? '').trim()]
+        }))
+        .filter(item => item.categoryName && item.value);
+
+      const target = categoryItems
+        .map(item => `${item.categoryName}|||${item.value}`)
+        .join('@@@');
+      if (!target) return;
+
+      entries.push({
+        chapterName,
+        target,
+        completed,
+        categoryItems,
+        detailKey: resolvedDetailKey,
+        dayIndex,
+        hasCompletionLink: true
+      });
+    });
+  });
+
+  const seen = new Set();
+  return entries.filter(item => {
+    const key = item.detailKey || item.chapterName;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function getCarryoverTargetEntries() {
+  const now = new Date();
+  const todayAbs = getAbsoluteDayNumber(months[now.getMonth()], now.getDate());
+  const subjects = ["Physics", "Chemistry", "Biology"];
+  const entries = [];
+
+  // Look through ALL previous calendar days, not only yesterday.
+  // Any category that is still incomplete remains in Back Portion until completed.
+  const seen = new Set();
+  for (let sourceAbs = todayAbs - 1; sourceAbs >= 0; sourceAbs--) {
+    const sourceDate = getMonthAndDayFromAbsolute(sourceAbs);
+
+    subjects.forEach(subjectName => {
+      const chapters = getChaptersForDaySubject(sourceDate.month, sourceDate.day, subjectName);
+      chapters.forEach(chapterName => {
+        const requestedDetailKey = `${sourceDate.month}_${subjectName}_${chapterName}`;
+        let resolvedDetailKey = requestedDetailKey;
+        let detail = appData.dayChapterDetails?.[requestedDetailKey];
+
+        if (!detail && appData.dayChapterDetails) {
+          Object.keys(appData.dayChapterDetails).some(k => {
+            if (k.endsWith(`_${subjectName}_${chapterName}`)) {
+              detail = appData.dayChapterDetails[k];
+              resolvedDetailKey = k;
+              return true;
+            }
+            return false;
+          });
+        }
+
+        if (!detail || !Array.isArray(detail.dayData) || !detail.dayData.length) return;
+
+        const startAbs = getAbsoluteDayNumber(
+          detail.startMonth || sourceDate.month,
+          parseInt(detail.startDay) || sourceDate.day
+        );
+        const dayIndex = sourceAbs - startAbs;
+        if (dayIndex < 0 || dayIndex >= detail.dayData.length) return;
+
+        const dayData = detail.dayData[dayIndex] || {};
+        syncSubDayCompletion(detail, dayData);
+        const ranges = dayData.ranges || {};
+        const categoryCompleted = dayData.categoryCompleted || {};
+        const incompleteItems = Object.entries(ranges)
+          .map(([categoryName, value]) => ({
+            categoryName: String(categoryName ?? '').trim(),
+            value: String(value ?? '').trim(),
+            completed: !!categoryCompleted[String(categoryName ?? '').trim()]
+          }))
+          .filter(item => item.categoryName && item.value && !item.completed);
+
+        if (!incompleteItems.length) return;
+
+        // Keep each actual allotted sub-day/chapter entry separately so older
+        // incomplete dates (29, 26, etc.) are not hidden by a newer one.
+        const uniqueKey = `${resolvedDetailKey}__${dayIndex}`;
+        if (seen.has(uniqueKey)) return;
+        seen.add(uniqueKey);
+
+        entries.push({
+          chapterName,
+          categoryItems: incompleteItems,
+          detailKey: resolvedDetailKey,
+          dayIndex,
+          sourceAbs,
+          sourceDate: `${sourceDate.month} ${sourceDate.day}`
+        });
+      });
+    });
+  }
+
+  // Newest incomplete allotment first.
+  entries.sort((a, b) => b.sourceAbs - a.sourceAbs);
+  return entries;
+}
+
+function getTargetSession(day, categoryName = '') {
+  const name = String(categoryName ?? '').trim();
+  if (day && day.categorySessions && typeof day.categorySessions === 'object' && name) {
+    const saved = day.categorySessions[name];
+    if (saved === 'night' || saved === 'afternoon') return saved;
+    return 'morning';
+  }
+  return 'morning';
+}
+
+function toggleTargetSession(detailKey, dayIndex, categoryName) {
+  const detail = appData.dayChapterDetails?.[detailKey];
+  if (!detail || !Array.isArray(detail.dayData) || !detail.dayData[dayIndex]) return;
+  const day = detail.dayData[dayIndex];
+  const name = String(categoryName ?? '').trim();
+  if (!name) return;
+  if (!day.categorySessions || typeof day.categorySessions !== 'object') day.categorySessions = {};
+  const current = getTargetSession(day, name);
+  day.categorySessions[name] =
+    current === 'morning' ? 'afternoon' :
+    current === 'afternoon' ? 'night' : 'morning';
+  saveData();
+  renderTodayTargets();
+}
+
+function targetSessionControl(detailKey, dayIndex, day, categoryName, compact = false) {
+  const categoryDone = !!(day && day.categoryCompleted && day.categoryCompleted[String(categoryName ?? '').trim()]);
+  const session = getTargetSession(day, categoryName);
+  const isNight = session === 'night';
+  const isAfternoon = session === 'afternoon';
+  const icon = isNight ? '🌙' : (isAfternoon ? '🌤️' : '☀️');
+  const label = isNight ? 'Night' : (isAfternoon ? 'Afternoon' : 'Morning');
+  const encodedKey = encodeURIComponent(detailKey);
+  const encodedCategory = encodeURIComponent(String(categoryName ?? '').trim());
+
+  // Clear, pill-style session badge so Morning/Night is immediately visible.
+  const borderColor = isNight ? '#8b5cf6' : (isAfternoon ? '#0ea5e9' : '#f59e0b');
+  const background = isNight ? '#ede9fe' : (isAfternoon ? '#e0f2fe' : '#fef3c7');
+  const textColor = isNight ? '#6d28d9' : (isAfternoon ? '#0369a1' : '#b45309');
+  const glow = isNight ? 'rgba(139,92,246,.24)' : (isAfternoon ? 'rgba(14,165,233,.24)' : 'rgba(245,158,11,.24)');
+  const padding = compact ? '4px 7px' : '6px 11px';
+  const fontSize = compact ? '10px' : '12px';
+
+  const disabledAttr = categoryDone ? 'disabled' : '';
+  const lockTitle = categoryDone
+    ? `${label} — locked after completion; untick the checkbox to change`
+    : `${label} — tap to change`;
+  const disabledStyle = categoryDone ? 'opacity:.72; cursor:not-allowed;' : 'cursor:pointer;';
+
+  return `<button type="button" ${disabledAttr}
+    onclick="toggleTargetSession(decodeURIComponent('${encodedKey}'), ${dayIndex}, decodeURIComponent('${encodedCategory}'))"
+    aria-label="${categoryDone ? `${label} — locked after completion` : `Change target time: ${label}`}"
+    title="${lockTitle}"
+    style="display:inline-flex; width:auto !important; max-width:max-content !important; align-items:center; justify-content:center; vertical-align:middle; box-sizing:border-box; margin:0; padding:${padding}; min-height:28px; border:2px solid ${borderColor}; border-radius:999px; background:${background}; color:${textColor}; box-shadow:0 2px 7px ${glow}; ${disabledStyle} font-size:${fontSize}; font-weight:900; line-height:1; gap:3px; white-space:nowrap; flex:0 0 auto;">
+    <span style="font-size:${compact ? '14px' : '16px'}; line-height:1;">${icon}</span>
+    <span>${label}</span>
+  </button>`;
+}
+
+function toggleCarryoverTargetCategory(detailKey, dayIndex, catName) {
+  const detail = appData.dayChapterDetails?.[detailKey];
+  if (!detail || !Array.isArray(detail.dayData) || !detail.dayData[dayIndex]) return;
+  const day = detail.dayData[dayIndex];
+  if (!day.categoryCompleted || typeof day.categoryCompleted !== 'object') day.categoryCompleted = {};
+  const normalizedName = String(catName ?? '').trim();
+  day.categoryCompleted[normalizedName] = true;
+  syncSubDayCompletion(detail, day);
+  saveData();
+  renderTodayTargets();
+}
+
+function toggleTodayTargetCategory(detailKey, dayIndex, catName) {
+  const detail = appData.dayChapterDetails?.[detailKey];
+  if (!detail || !Array.isArray(detail.dayData) || !detail.dayData[dayIndex]) return;
+  const day = detail.dayData[dayIndex];
+  if (!day.categoryCompleted || typeof day.categoryCompleted !== 'object') day.categoryCompleted = {};
+  const normalizedName = String(catName ?? '').trim();
+  day.categoryCompleted[normalizedName] = !day.categoryCompleted[normalizedName];
+  syncSubDayCompletion(detail, day);
+  saveData();
+  renderTodayTargets();
+}
+
+function toggleTodayTargetDone(detailKey, dayIndex) {
+  // Legacy helper retained for saved/older markup; chapter completion is now derived
+  // from the individual category checkboxes.
+  const detail = appData.dayChapterDetails?.[detailKey];
+  if (!detail || !Array.isArray(detail.dayData) || !detail.dayData[dayIndex]) return;
+  const day = detail.dayData[dayIndex];
+  const activeNames = Object.entries(day.ranges || {})
+    .filter(([name, value]) => String(name || '').trim() && String(value || '').trim())
+    .map(([name]) => String(name).trim());
+  if (!day.categoryCompleted || typeof day.categoryCompleted !== 'object') day.categoryCompleted = {};
+  const next = !day.completed;
+  activeNames.forEach(name => day.categoryCompleted[name] = next);
+  syncSubDayCompletion(detail, day);
+  saveData();
+  renderTodayTargets();
+}
+
+function getUpcomingTestDays() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const result = [];
+  Object.keys(appData.testDays || {}).forEach(key => {
+    if (!appData.testDays[key]) return;
+    // A test explicitly marked Done belongs only in Back Test.
+    // Do not show it again in the Home Upcoming Test section.
+    if (appData.testDayCompleted?.[key]) return;
+    const parts = key.split('_');
+    if (parts.length < 2) return;
+    const monthName = parts.slice(0, -1).join('_');
+    const dayNum = parseInt(parts[parts.length - 1], 10);
+    const monthIndex = months.indexOf(monthName);
+    if (monthIndex < 0 || !dayNum) return;
+    const date = new Date(now.getFullYear(), monthIndex, dayNum);
+    date.setHours(0, 0, 0, 0);
+    if (date < today) return;
+    result.push({
+      key,
+      monthName,
+      dayNum,
+      date,
+      name: (appData.testDayNames && appData.testDayNames[key]) || 'Test'
+    });
+  });
+  result.sort((a,b) => a.date - b.date);
+  return result;
+}
+
+function openUpcomingTestFromHome(monthName, dayNum) {
+  const key = `${monthName}_${dayNum}`;
+  if (!appData.testDays?.[key]) return;
+  openTestNameDialog(monthName, dayNum, appData.testDayNames?.[key] || 'Test', false);
+}
+
+function saveTestPreCompletionSnapshot(key) {
+  if (!appData.testDayChapters?.[key]) return;
+  if (!appData.testDayPreCompletion) appData.testDayPreCompletion = {};
+  // Always overwrite when Test Done is pressed: the snapshot represents
+  // the exact chapter state at that moment, not an older/deleted test.
+  const source = appData.testDayChapters[key] || {};
+  const snapshot = {};
+  let total = 0;
+  let done = 0;
+  ['Physics','Chemistry','Biology'].forEach(subject => {
+    const rows = Array.isArray(source[subject]) ? source[subject] : [];
+    snapshot[subject] = rows.map(ch => ({ name: String(ch?.name || ''), done: !!ch?.done }));
+    total += snapshot[subject].filter(ch => ch.name.trim()).length;
+    done += snapshot[subject].filter(ch => ch.name.trim() && ch.done).length;
+  });
+  snapshot.total = total;
+  snapshot.done = done;
+  snapshot.pct = total ? Math.round((done / total) * 100) : 0;
+  snapshot.savedAt = new Date().toISOString();
+  appData.testDayPreCompletion[key] = snapshot;
+}
+
+function showPreTestCompletion(monthName, dayNum) {
+  const key = `${monthName}_${dayNum}`;
+  const testName = appData.testDayNames?.[key] || 'Test';
+  const snapshot = appData.testDayPreCompletion?.[key];
+  if (!snapshot) {
+    alert('इस test का Pre-Test Completion snapshot उपलब्ध नहीं है। यह snapshot Test Done करते समय save होता है।');
+    return;
+  }
+  const subjects = ['Physics','Chemistry','Biology'];
+  const subjectIcons = { Physics:'⚡', Chemistry:'🧪', Biology:'🌿' };
+  const rowsHtml = subjects.map(subject => {
+    const rows = Array.isArray(snapshot[subject]) ? snapshot[subject].filter(ch => ch.name.trim()) : [];
+    if (!rows.length) return '';
+    return `<div style="margin-top:12px;border:1px solid rgba(100,116,139,.22);border-radius:12px;padding:10px 11px;background:rgba(248,250,252,.72);">
+      <div style="font-size:14px;font-weight:900;color:#172033;margin-bottom:7px;">${subjectIcons[subject]} ${subject}</div>
+      ${rows.map(ch => `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px solid rgba(148,163,184,.16);"><span style="font-size:12px;font-weight:800;color:#334155;">${escapeHtml(ch.name)}</span><span style="font-size:11px;font-weight:900;color:${ch.done ? '#15803d' : '#dc2626'};">${ch.done ? '✓ Done' : '○ Incomplete'}</span></div>`).join('')}
+    </div>`;
+  }).join('');
+
+  const overlay = document.createElement('div');
+  overlay.id = 'pre-test-completion-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100000;display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;';
+  overlay.innerHTML = `<div style="width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--card-bg,#fff);border-radius:18px;padding:16px;box-sizing:border-box;box-shadow:0 18px 50px rgba(0,0,0,.25);">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <div style="min-width:0;"><div style="font-size:11px;font-weight:900;color:#64748b;text-transform:uppercase;letter-spacing:.4px;">Pre-Test Completion</div><div style="font-size:18px;font-weight:900;color:var(--text-color,#172033);margin-top:2px;">📝 ${escapeHtml(testName)}</div><div style="font-size:11px;font-weight:800;color:#64748b;margin-top:3px;">${escapeHtml(monthName)} ${dayNum} • Test देने से पहले saved snapshot</div></div>
+      <button type="button" onclick="document.getElementById('pre-test-completion-overlay')?.remove()" style="border:none;background:#e2e8f0;border-radius:9px;width:34px;height:34px;font-size:18px;font-weight:900;cursor:pointer;">×</button>
+    </div>
+    <div style="margin-top:13px;border:1px solid #93c5fd;border-radius:14px;padding:12px;background:#eff6ff;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div><div style="font-size:11px;font-weight:900;color:#1d4ed8;text-transform:uppercase;">Chapter Completion</div><div style="font-size:13px;font-weight:800;color:#1e3a8a;margin-top:3px;">${snapshot.done} of ${snapshot.total} chapters completed</div></div>
+      <div style="font-size:26px;font-weight:950;color:#1d4ed8;">${snapshot.pct}%</div>
+    </div>
+    ${rowsHtml || '<div style="margin-top:12px;font-size:12px;font-weight:700;color:#64748b;">No chapters were saved for this test.</div>'}
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
+let activeTestTrackerDayKey = null;
+
+function markUpcomingTestDoneAndOpenTracker(monthName, dayNum) {
+  const key = `${monthName}_${dayNum}`;
+  if (!appData.testDays?.[key]) return;
+  saveTestPreCompletionSnapshot(key);
+  if (!appData.testDayCompleted) appData.testDayCompleted = {};
+  appData.testDayCompleted[key] = true;
+  saveData();
+
+  const name = appData.testDayNames?.[key] || 'Test';
+  const dateLabel = `${monthName} ${dayNum}`;
+  closeTestNameDialog();
+  renderUpcomingTestsHome();
+
+  // If this test already has a saved marks record, open that same record
+  // instead of creating a fresh "Add Test Record" form.
+  activeTestTrackerDayKey = key;
+  if (openMatchingSavedTestRecord(name, key)) return;
+
+  navTo('tests', {}, false);
+  const form = document.getElementById('test-form-box');
+  if (form) form.style.display = 'block';
+  const nameInput = document.getElementById('test-name');
+  if (nameInput) {
+    nameInput.value = name;
+    nameInput.focus();
+  }
+  let context = document.getElementById('test-tracker-context');
+  if (!context) {
+    context = document.createElement('div');
+    context.id = 'test-tracker-context';
+    const formBox = document.getElementById('test-form-box');
+    if (formBox?.parentNode) formBox.parentNode.insertBefore(context, formBox);
+  }
+  context.style.cssText = 'margin-bottom:12px;padding:10px 12px;border:1px solid #86efac;border-radius:12px;background:#f0fdf4;color:#166534;font-size:13px;font-weight:800;';
+  context.innerHTML = `✅ Test marked Done: <b>${escapeHtml(name)}</b> &nbsp;•&nbsp; ${escapeHtml(dateLabel)}<br><span style="font-size:11px;font-weight:700;color:#15803d;">The Test Tracker form below is prepared for this same test.</span>`;
+}
+
+function openBackTestInTracker(monthName, dayNum) {
+  const key = `${monthName}_${dayNum}`;
+  if (!appData.testDays?.[key]) return;
+  const name = appData.testDayNames?.[key] || 'Test';
+  const dateLabel = `${monthName} ${dayNum}`;
+
+  activeTestTrackerDayKey = key;
+
+  // Prefer the already-saved record for this exact Test Day. If older data
+  // has no day link, fall back to an exact test-name match.
+  if (openMatchingSavedTestRecord(name, key)) return;
+
+  navTo('tests', {}, false);
+  const form = document.getElementById('test-form-box');
+  if (form) form.style.display = 'block';
+  const nameInput = document.getElementById('test-name');
+  if (nameInput) {
+    nameInput.value = name;
+    nameInput.focus();
+    nameInput.select();
+  }
+
+  let context = document.getElementById('test-tracker-context');
+  if (!context) {
+    context = document.createElement('div');
+    context.id = 'test-tracker-context';
+    const formBox = document.getElementById('test-form-box');
+    if (formBox?.parentNode) formBox.parentNode.insertBefore(context, formBox);
+  }
+  context.style.cssText = 'margin-bottom:12px;padding:10px 12px;border:1px solid #bfdbfe;border-radius:12px;background:#eff6ff;color:#1e3a8a;font-size:13px;font-weight:800;';
+  context.innerHTML = `🕘 Back Test: <b>${escapeHtml(name)}</b> &nbsp;•&nbsp; ${escapeHtml(dateLabel)}<br><span style="font-size:11px;font-weight:700;color:#1d4ed8;">Result आने पर नीचे इसी test की marks entry save कर सकते हो.</span><div style="margin-top:8px;"><button type="button" onclick="showPreTestCompletion('${escapeHtml(monthName)}', ${dayNum})" style="border:none;border-radius:9px;padding:7px 10px;background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:900;cursor:pointer;">📊 Pre-Test Completion देखो</button></div>`;
+}
+
+function openMatchingSavedTestRecord(name, dayKey = null) {
+  const wanted = String(name || '').trim().toLowerCase();
+  if (!wanted) return false;
+
+  const tests = Array.isArray(appData.tests) ? appData.tests : [];
+  let match = null;
+
+  // First choice: same linked Test Day.
+  if (dayKey) {
+    match = tests.slice().reverse().find(t =>
+      t && t.testDayKey === dayKey &&
+      String(t.name || '').trim().toLowerCase() === wanted
+    );
+  }
+
+  // Backward-compatible fallback for records created before testDayKey existed.
+  if (!match) {
+    match = tests.slice().reverse().find(t =>
+      t && String(t.name || '').trim().toLowerCase() === wanted
+    );
+  }
+
+  if (!match) return false;
+
+  navTo('tests', {}, false);
+
+  const form = document.getElementById('test-form-box');
+  if (form) form.style.display = 'none';
+
+  const context = document.getElementById('test-tracker-context');
+  if (context) {
+    context.remove();
+  }
+
+  const card = document.getElementById(`test-record-${match.id}`);
+  if (card) {
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    card.style.transition = 'box-shadow .2s ease, transform .2s ease';
+    card.style.boxShadow = '0 0 0 4px rgba(37,99,235,.20), 0 8px 24px rgba(37,99,235,.12)';
+    card.style.transform = 'scale(1.01)';
+    setTimeout(() => {
+      card.style.boxShadow = '';
+      card.style.transform = '';
+    }, 1800);
+  }
+
+  return true;
+}
+
+function getCompletedBackTests() {
+  const now = new Date();
+  return Object.keys(appData.testDayCompleted || {})
+    .filter(key => appData.testDayCompleted[key] && appData.testDays?.[key])
+    .map(key => {
+      const parts = key.split('_');
+      const dayNum = parseInt(parts[parts.length - 1], 10);
+      const monthName = parts.slice(0, -1).join('_');
+      const monthIndex = months.indexOf(monthName);
+      if (monthIndex < 0 || !dayNum) return null;
+      return {
+        key,
+        monthName,
+        dayNum,
+        date: new Date(now.getFullYear(), monthIndex, dayNum),
+        name: (appData.testDayNames && appData.testDayNames[key]) || 'Test'
+      };
+    })
+    .filter(Boolean)
+    .sort((a,b) => b.date - a.date);
+}
+
+function renderBackTestsHome() {
+  const container = document.getElementById('back-test-section');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div style="border:1px solid rgba(100,116,139,.25);border-radius:15px;padding:11px 13px;background:var(--box-bg,#f8fafc);display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 3px 10px rgba(15,23,42,.05);">
+      <div style="min-width:0;">
+        <div style="font-size:17px;font-weight:900;color:var(--text-color,#172033);">🕘 Back Test</div>
+        <div style="font-size:11px;font-weight:700;color:#64748b;margin-top:2px;">अपने completed tests यहाँ देखें</div>
+      </div>
+      <button type="button" onclick="navTo('back-tests')" style="width:auto;flex:0 0 auto;margin:0;border:none;border-radius:9px;padding:8px 12px;background:#e2e8f0;color:#334155;font-size:11px;font-weight:900;cursor:pointer;">See All ›</button>
+    </div>`;
+}
+
+function getPreTestSnapshotSummary(monthName, dayNum) {
+  const key = `${monthName}_${dayNum}`;
+  const snapshot = appData.testDayPreCompletion?.[key];
+  if (!snapshot) {
+    return `<div style="margin-top:7px;padding:7px 9px;border-radius:9px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:10px;font-weight:800;">Pre-Test snapshot available नहीं है.</div>`;
+  }
+  return `<button type="button" onclick="event.stopPropagation();showPreTestCompletion('${escapeHtml(monthName)}', ${dayNum})" style="display:block;width:100%;margin-top:7px;padding:8px 9px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;text-align:left;cursor:pointer;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <div style="font-size:10px;font-weight:900;color:#1d4ed8;text-transform:uppercase;">📊 Pre-Test Completion</div>
+      <div style="font-size:15px;font-weight:950;color:#1d4ed8;">${snapshot.pct}%</div>
+    </div>
+    <div style="font-size:11px;font-weight:800;color:#1e3a8a;margin-top:2px;">${snapshot.done} / ${snapshot.total} chapters completed before test</div>
+    <div style="font-size:9px;font-weight:900;color:#2563eb;margin-top:3px;">Tap to see chapter-by-chapter status ›</div>
+  </button>`;
+}
+
+function renderBackTestsPage() {
+  const container = document.getElementById('back-tests-page-list');
+  if (!container) return;
+
+  const completed = getCompletedBackTests();
+
+  if (!completed.length) {
+    container.innerHTML = `
+      <div style="padding:18px;border-radius:14px;background:rgba(148,163,184,.10);border:1px dashed #cbd5e1;color:#64748b;text-align:center;font-weight:800;">
+        अभी कोई completed Back Test नहीं है.
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:10px;">
+      Test देने के बाद result आने पर यहाँ से उसी test की marks entry खोलो.
+    </div>
+    ${completed.map(t => `
+      <div role="button" tabindex="0"
+        onclick="openBackTestInTracker('${escapeHtml(t.monthName)}', ${t.dayNum})"
+        onkeydown="if(event.key==='Enter'||event.key===' ')openBackTestInTracker('${escapeHtml(t.monthName)}', ${t.dayNum})"
+        style="width:100%;box-sizing:border-box;border:2px solid rgba(100,116,139,.25);border-radius:15px;padding:11px 13px;background:linear-gradient(90deg,rgba(248,250,252,.96),rgba(241,245,249,.9));box-shadow:0 3px 10px rgba(15,23,42,.06);display:flex;align-items:center;gap:11px;cursor:pointer;margin-bottom:9px;">
+        <div style="width:42px;height:42px;flex:0 0 42px;border-radius:11px;background:#64748b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;">🕘</div>
+        <div style="min-width:0;flex:1;">
+          <div style="font-size:10px;font-weight:900;color:#64748b;text-transform:uppercase;letter-spacing:.4px;">Back Test</div>
+          <div style="font-size:15px;font-weight:900;color:var(--text-color,#172033);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">📝 ${escapeHtml(t.name)}</div>
+          <div style="font-size:11px;font-weight:800;color:#64748b;margin-top:3px;">${escapeHtml(t.monthName)} ${t.dayNum} &nbsp;•&nbsp; Test completed</div>
+          ${getPreTestSnapshotSummary(t.monthName, t.dayNum)}
+        </div>
+        <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+          <button type="button" onclick="event.stopPropagation();showPreTestCompletion('${escapeHtml(t.monthName)}', ${t.dayNum})" style="border:none;border-radius:8px;padding:6px 8px;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:900;cursor:pointer;">📊 Pre-Test</button>
+          <div style="font-size:12px;font-weight:900;color:#2563eb;">Add Result ›</div>
+        </div>
+      </div>`).join('')}`;
+}
+
+function renderUpcomingTestsHome() {
+  const container = document.getElementById('upcoming-test-section');
+  if (!container) return;
+  const upcoming = getUpcomingTestDays();
+  if (!upcoming.length) {
+    container.innerHTML = `
+      <div style="border:1px solid rgba(37,99,235,.25);border-radius:16px;padding:12px 14px;background:rgba(239,246,255,.65);display:flex;align-items:center;gap:10px;">
+        <div style="font-size:24px;line-height:1;">⏰</div>
+        <div style="min-width:0;">
+          <div style="font-size:16px;font-weight:900;color:var(--text-color,#172033);">Upcoming Test</div>
+          <div style="font-size:12px;color:#64748b;font-weight:700;margin-top:2px;">No upcoming test selected yet.</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  // Show every saved upcoming test, in date order. Each test gets its own
+  // horizontal row so multiple tests never overwrite or hide one another.
+  container.innerHTML = upcoming.map(t => {
+    const diffDays = Math.max(0, Math.round((t.date - today) / 86400000));
+    const chapters = appData.testDayChapters?.[t.key] || {};
+    const chapterCount = ['Physics','Chemistry','Biology'].reduce((n,s) =>
+      n + (Array.isArray(chapters[s]) ? chapters[s].filter(ch => ch && String(ch.name || '').trim()).length : 0), 0);
+    const doneCount = ['Physics','Chemistry','Biology'].reduce((n,s) =>
+      n + (Array.isArray(chapters[s]) ? chapters[s].filter(ch => ch && String(ch.name || '').trim() && ch.done).length : 0), 0);
+    const completionPct = chapterCount > 0 ? Math.round((doneCount / chapterCount) * 100) : 0;
+    const isDone = !!appData.testDayCompleted?.[t.key];
+    const countdown = isDone ? 'Done' : (diffDays === 0 ? 'Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} left`);
+    const countdownColor = isDone ? '#16a34a' : (diffDays === 0 ? '#16a34a' : '#dc2626');
+
+    return `
+      <div style="width:100%;box-sizing:border-box;border:2px solid ${isDone ? 'rgba(22,163,74,.38)' : 'rgba(37,99,235,.30)'};border-radius:16px;padding:11px 13px;background:${isDone ? 'linear-gradient(90deg,rgba(240,253,244,.95),rgba(248,250,252,.9))' : 'linear-gradient(90deg,rgba(239,246,255,.92),rgba(248,250,252,.9))'};box-shadow:0 3px 10px rgba(37,99,235,.08);display:flex;align-items:center;gap:11px;margin-bottom:9px;">
+        <div role="button" tabindex="0" onclick="openUpcomingTestFromHome('${escapeHtml(t.monthName)}', ${t.dayNum})" onkeydown="if(event.key==='Enter'||event.key===' ')openUpcomingTestFromHome('${escapeHtml(t.monthName)}', ${t.dayNum})" style="width:44px;height:44px;flex:0 0 44px;border-radius:11px;background:${isDone ? '#16a34a' : '#2563eb'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 3px 8px rgba(37,99,235,.18);cursor:pointer;">${isDone ? '✓' : '⏰'}</div>
+        <div role="button" tabindex="0" onclick="openUpcomingTestFromHome('${escapeHtml(t.monthName)}', ${t.dayNum})" onkeydown="if(event.key==='Enter'||event.key===' ')openUpcomingTestFromHome('${escapeHtml(t.monthName)}', ${t.dayNum})" style="min-width:0;flex:1;cursor:pointer;">
+          <div style="font-size:10px;font-weight:900;color:${isDone ? '#16a34a' : '#2563eb'};text-transform:uppercase;letter-spacing:.4px;">${isDone ? 'Test Completed' : 'Upcoming Test'}</div>
+          <div style="font-size:16px;font-weight:900;color:var(--text-color,#172033);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">📝 ${escapeHtml(t.name)}</div>
+          <div style="font-size:12px;font-weight:800;color:#64748b;margin-top:3px;">${escapeHtml(t.monthName)} ${t.dayNum} &nbsp;•&nbsp; ${chapterCount ? `${completionPct}% complete (${doneCount}/${chapterCount} chapters)` : 'Chapters not added yet'}</div>
+        </div>
+        <div style="flex:0 0 auto;text-align:right;min-width:78px;">
+          <div style="font-size:16px;font-weight:900;color:${countdownColor};">${countdown}</div>
+          <button type="button" onclick="markUpcomingTestDoneAndOpenTracker('${escapeHtml(t.monthName)}', ${t.dayNum})" style="margin-top:5px;border:none;border-radius:8px;padding:6px 8px;background:${isDone ? '#dcfce7' : '#16a34a'};color:${isDone ? '#166534' : '#fff'};font-size:10px;font-weight:900;cursor:pointer;">${isDone ? '✓ Done • Tracker' : '✓ Test Done'}</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderTodayTargets() {
+  const container = document.getElementById('today-targets-section');
+  if (!container) return;
+
+  const now = new Date();
+  const month = months[now.getMonth()];
+  const dayNum = now.getDate();
+  const entries = getTodayTargetEntries();
+  const carryoverEntries = getCarryoverTargetEntries();
+  const totalTargets = entries.length;
+  const completedTargets = entries.filter(item => item.completed).length;
+  const progressPct = totalTargets > 0 ? Math.round((completedTargets / totalTargets) * 100) : 0;
+
+  let html = `
+    <div style="background:var(--box-bg,#f3eedf); border:2px solid #2563eb; border-radius:18px; padding:16px; box-shadow:0 4px 12px rgba(37,99,235,.10);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+        <div style="font-size:21px; font-weight:900; color:var(--text-color,#172033);">🎯 Today's Target</div>
+        <div style="font-size:12px; font-weight:800; color:#2563eb; background:#dbeafe; padding:6px 10px; border-radius:999px;">${month} ${dayNum}</div>
+      </div>
+      <div style="margin-bottom:14px; padding:11px 12px; border-radius:12px; background:rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.18);">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div style="font-size:14px; font-weight:900; color:var(--text-color,#172033);">📊 Today's Progress</div>
+          <div style="font-size:17px; font-weight:900; color:#2563eb;">${progressPct}%</div>
+        </div>
+        <div style="font-size:12px; font-weight:800; color:#64748b; margin-top:3px;">${completedTargets} / ${totalTargets} targets completed</div>
+        <div style="width:100%; height:9px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-top:8px;">
+          <div style="height:100%; width:${progressPct}%; background:#2563eb; border-radius:99px; transition:width .3s;"></div>
+        </div>
+      </div>`;
+
+  if (carryoverEntries.length) {
+    html += `
+      <div style="margin-bottom:14px; padding:12px; border-radius:14px; background:rgba(245,158,11,.10); border:2px solid #f59e0b;">
+        <div style="font-size:16px; font-weight:900; color:#92400e;">🔁 Back Portion</div>
+        <div style="font-size:11px; font-weight:800; color:#92400e; margin-top:2px;">Incomplete targets carried forward from all previous incomplete allotments.</div>`;
+
+    carryoverEntries.forEach(item => {
+      const encodedKey = encodeURIComponent(item.detailKey);
+      const categoryRows = item.categoryItems.map(cat => {
+        const encodedCategory = encodeURIComponent(cat.categoryName);
+        return `<div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 9px; border:1px solid #fde68a; border-radius:9px; background:rgba(255,255,255,.72);">
+          <div style="min-width:0; flex:1;">
+            <div style="font-size:10px; line-height:1.1; font-weight:900; color:#92400e; text-transform:uppercase; letter-spacing:.4px;">${escapeHtml(cat.categoryName)}</div>
+            <div style="font-size:14px; font-weight:900; color:#334155; margin-top:2px;">🎯 ${escapeHtml(cat.value)}</div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:7px; flex:0 0 auto;">
+            ${targetSessionControl(item.detailKey, item.dayIndex, (appData.dayChapterDetails?.[item.detailKey]?.dayData || [])[item.dayIndex], cat.categoryName, true)}
+            <input type="checkbox" aria-label="Complete carried-over ${escapeHtml(cat.categoryName)}" onchange="toggleCarryoverTargetCategory(decodeURIComponent('${encodedKey}'), ${item.dayIndex}, decodeURIComponent('${encodedCategory}'))" style="width:22px;height:22px;accent-color:#0f5132;flex:0 0 auto;cursor:pointer;">
+          </div>
+        </div>`;
+      }).join('');
+
+      html += `<div style="margin-top:9px; padding:10px; border:1px solid #fbbf24; border-radius:11px; background:rgba(255,251,235,.72);">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;">
+          <div style="display:flex; align-items:center; gap:7px; min-width:0; flex:1;">
+            <div style="font-size:14px; font-weight:900; color:#172033; min-width:0; word-break:break-word;">📖 ${escapeHtml(item.chapterName)}</div>
+          </div>
+          <div style="font-size:11px; font-weight:900; color:#92400e; white-space:nowrap; flex:0 0 auto;">Allotted on ${escapeHtml(item.sourceDate)}</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:5px;">${categoryRows}</div>
+      </div>`;
+    });
+
+    html += `</div>`;
+  }
+
+  if (!entries.length) {
+    html += `<div style="padding:14px; border-radius:12px; background:rgba(148,163,184,.12); color:#64748b; font-weight:700; text-align:center;">No target is scheduled for today.</div>`;
+  } else {
+    entries.forEach((item, index) => {
+      const encodedKey = encodeURIComponent(item.detailKey);
+      const done = item.completed;
+      const border = done ? '#0f5132' : '#b91c1c';
+      const bg = done ? 'rgba(209,250,229,.55)' : 'rgba(254,242,242,.70)';
+      const status = done ? '✓ Completed' : '○ Pending';
+      const chapterCheckbox = `<input type="checkbox" ${done ? 'checked' : ''} disabled aria-label="${escapeHtml(item.chapterName)} completed" style="width:30px;height:30px;margin:0;align-self:center;accent-color:#0f5132;flex:0 0 auto;">`;
+      const categoryRows = item.categoryItems.map(cat => {
+        const encodedCategory = encodeURIComponent(cat.categoryName);
+        const rowBorder = cat.completed ? '#86efac' : '#e2e8f0';
+        const rowBg = cat.completed ? 'rgba(209,250,229,.78)' : 'rgba(255,255,255,.62)';
+        return `<div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 9px; border:1px solid ${rowBorder}; border-radius:9px; background:${rowBg}; transition:background .2s, border-color .2s;">
+          <div style="min-width:0; flex:1;">
+            <div style="font-size:10px; line-height:1.1; font-weight:900; color:#64748b; text-transform:uppercase; letter-spacing:.4px;">${escapeHtml(cat.categoryName)}</div>
+            <div style="font-size:14px; font-weight:900; color:#334155; margin-top:2px;">🎯 ${escapeHtml(cat.value)}</div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:7px; flex:0 0 auto;">
+            ${targetSessionControl(item.detailKey, item.dayIndex, (appData.dayChapterDetails?.[item.detailKey]?.dayData || [])[item.dayIndex], cat.categoryName, true)}
+            <input type="checkbox" ${cat.completed ? 'checked' : ''} aria-label="Mark ${escapeHtml(cat.categoryName)} completed" onchange="toggleTodayTargetCategory(decodeURIComponent('${encodedKey}'), ${item.dayIndex}, decodeURIComponent('${encodedCategory}'))" style="width:22px;height:22px;accent-color:#0f5132;flex:0 0 auto;cursor:pointer;">
+          </div>
+        </div>`;
+      }).join('');
+
+      html += `
+        <div style="border:2px solid ${border}; background:${bg}; border-radius:14px; padding:12px 13px; margin-top:${index ? '10px' : '0'}; transition:border-color .2s, background .2s;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <div style="font-size:17px; font-weight:900; color:var(--text-color,#172033); word-break:break-word; min-width:0;">📖 ${escapeHtml(item.chapterName)}</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:7px; height:34px; flex:0 0 auto;">
+                  ${chapterCheckbox}
+                </div>
+              </div>
+              <div style="margin-top:7px; display:flex; flex-direction:column; gap:5px;">
+                ${categoryRows}
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:7px; font-size:12px; font-weight:900; color:${done ? '#0f5132' : '#b91c1c'};">${done ? '✓ All Done' : '○ Pending — complete all targets below'}</div>
+        </div>`;
+    });
+  }
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+function renderMonthDaysList() {
+  let totalDays = monthDaysCount[currentMonth] || 30;
+  let html = "";
+  let testDaySelectionEnabled = isTestDaySelectionEnabled(currentMonth);
+
+  let monthTestSwitch = `<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+    <span style="font-size:12px; font-weight:800; color:${testDaySelectionEnabled ? '#16a34a' : '#dc2626'};">🎯 Test Day</span>
+    <button type="button" onclick="toggleMonthTestDay(event, '${currentMonth}')" aria-pressed="${testDaySelectionEnabled ? 'true' : 'false'}" title="${testDaySelectionEnabled ? 'Turn Test Day selection OFF' : 'Turn Test Day selection ON'}" style="position:relative; display:inline-flex; align-items:center; width:42px; height:22px; padding:0; border:none; border-radius:999px; background:${testDaySelectionEnabled ? '#16a34a' : '#dc2626'}; cursor:pointer; transition:background .2s; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);">
+      <span style="position:absolute; width:18px; height:18px; border-radius:50%; background:#fff; top:2px; left:${testDaySelectionEnabled ? '22px' : '2px'}; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:left .2s;"></span>
+    </button>
+    <span style="font-size:11px; font-weight:800; color:${testDaySelectionEnabled ? '#16a34a' : '#dc2626'}; min-width:22px;">${testDaySelectionEnabled ? 'ON' : 'OFF'}</span>
+  </div>`;
+
+  document.getElementById('month-days-title').innerHTML = `📅 ${currentMonth} <span style="font-weight:500; color:#64748b;">—</span>`;
+  let monthHeaderControl = document.getElementById('month-test-day-control');
+  if (monthHeaderControl) monthHeaderControl.innerHTML = monthTestSwitch;
+
+  let nowObj = new Date();
+  let realCurrDay = nowObj.getDate();
+  let realCurrMonthIdx = nowObj.getMonth();
+  let realCurrMonthName = months[realCurrMonthIdx];
+
+  for (let d = 1; d <= totalDays; d++) {
+    let targetAbs = getAbsoluteDayNumber(currentMonth, d);
+    let hasTaskForDay = false;
+
+    Object.keys(appData.dayChapterDetails || {}).forEach(k => {
+      let detail = appData.dayChapterDetails[k];
+      if (detail && detail.startDay) {
+        let sMonth = detail.startMonth || currentMonth;
+        let startAbs = getAbsoluteDayNumber(sMonth, parseInt(detail.startDay) || 1);
+        let totalAllotted = parseInt(detail.days) || 0;
+        if (targetAbs >= startAbs && targetAbs < startAbs + totalAllotted) {
+          hasTaskForDay = true;
+        }
+      }
+    });
+
+    let testDayKey = `${currentMonth}_${d}`;
+    let isTestDay = appData.testDays && appData.testDays[testDayKey];
+    let testDayName = (appData.testDayNames && appData.testDayNames[testDayKey]) || 'Test';
+    let dayCompleted = isDayFullyCompleted(currentMonth, d);
+    let isCurrentRealDay = (currentMonth === realCurrMonthName && d === realCurrDay);
+    
+    let cardStyle = "";
+    let badgeIndicator = "";
+    let fontColorStyle = "";
+    const softDayColors = [
+      "rgba(59,130,246,.34)","rgba(16,185,129,.34)","rgba(139,92,246,.34)",
+      "rgba(236,72,153,.30)","rgba(245,158,11,.34)","rgba(14,165,233,.34)"
+    ];
+    const softDayColor = softDayColors[(d - 1) % softDayColors.length];
+
+    if (isTestDay) {
+      cardStyle = "background-color: #fef08a !important; border-color: #eab308 !important;";
+      fontColorStyle = "color: #dc2626 !important; font-weight: 900;";
+      badgeIndicator = `<div style="font-size:11px; background:#dc2626; color:#fff; padding:2px 6px; border-radius:6px; margin-top:4px; font-weight:bold;">🎯 TEST DAY</div><div style="font-size:11px; background:#fff; color:#b91c1c; border:1px solid #fca5a5; padding:3px 7px; border-radius:6px; margin-top:4px; font-weight:900; word-break:break-word;">📝 ${escapeHtml(testDayName)}</div>`;
+    } else if (dayCompleted) {
+      cardStyle = "border-color:rgba(16,185,129,.42); background:var(--card-bg, #d1e7dd); color:#0f5132; box-shadow:0 0 7px rgba(16,185,129,.10);";
+      badgeIndicator = `<div style="font-size:11px; background:#0f5132; color:#fff; padding:2px 6px; border-radius:6px; margin-top:4px; font-weight:bold;">✅ Day Completed</div>`;
+    } else if (hasTaskForDay) {
+      cardStyle = "border-color:rgba(236,72,153,.38); background:var(--card-bg, #fff5f5); box-shadow:0 0 7px rgba(236,72,153,.09);";
+      badgeIndicator = `<div style="font-size:11px; background:#b91c1c; color:#fff; padding:2px 6px; border-radius:6px; margin-top:4px; font-weight:bold;">📌 Schedule Added</div>`;
+    } else {
+      badgeIndicator = `<div class="day-view-subjects-hint">Click to view subjects</div>`;
+    }
+
+    // Keep the current day highlight exactly as before; other days only get a faint edge color.
+    if (!isCurrentRealDay) {
+      cardStyle += `border:2px solid ${softDayColor}; box-shadow:0 0 6px ${softDayColor};`;
+    }
+
+    let currentDayHighlightHtml = "";
+    if (isCurrentRealDay) {
+      cardStyle += " box-shadow: 0 0 12px 3px rgba(37, 99, 235, 0.6); border: 2px solid #2563eb !important;";
+      currentDayHighlightHtml = `<div style="font-size:10px; background:#2563eb; color:#fff; padding:2px 6px; border-radius:4px; position:absolute; top:8px; right:8px; font-weight:bold;">📍 Today</div>`;
+    }
+
+    let countdownText = "";
+    const currentDateOnly = new Date(nowObj.getFullYear(), nowObj.getMonth(), nowObj.getDate());
+    const thisMonthIndex = months.indexOf(currentMonth);
+    const realTodayAbs = realCurrMonthIdx * 31 + realCurrDay;
+    const dayAbs = thisMonthIndex * 31 + d;
+
+    if (isTestDay) {
+      let testDate = new Date(nowObj.getFullYear(), thisMonthIndex, d);
+      testDate.setHours(0, 0, 0, 0);
+      let diffDays = Math.round((testDate - currentDateOnly) / (1000 * 60 * 60 * 24));
+
+      if (diffDays > 0) {
+        countdownText = `<div style="font-size:11px; color:#2563eb; margin-top:2px; font-weight:bold;">⏳ ${diffDays} days left</div>`;
+      } else if (diffDays === 0) {
+        countdownText = `<div style="font-size:11px; color:#16a34a; margin-top:2px; font-weight:bold;">⏳ 0 days left</div>`;
+      } else {
+        countdownText = `<div style="font-size:11px; color:#64748b; margin-top:2px; font-weight:bold;">📌 Date Passed</div>`;
+      }
+    } else if (isCurrentRealDay) {
+      // Current Day पर अगली आने वाली Test Day का countdown दिखाएँ।
+      let nextTestDate = null;
+      let nextTestName = '';
+      Object.keys(appData.testDays || {}).forEach(key => {
+        if (!appData.testDays[key]) return;
+        const parts = key.split('_');
+        if (parts.length < 2) return;
+        const mName = parts.slice(0, -1).join('_');
+        const dayNum = parseInt(parts[parts.length - 1], 10);
+        const mIndex = months.indexOf(mName);
+        if (mIndex < 0 || !dayNum) return;
+        const candidateDate = new Date(nowObj.getFullYear(), mIndex, dayNum);
+        candidateDate.setHours(0, 0, 0, 0);
+        if (candidateDate > currentDateOnly && (nextTestDate === null || candidateDate < nextTestDate)) {
+          nextTestDate = candidateDate;
+          nextTestName = (appData.testDayNames && appData.testDayNames[key]) || 'Test';
+        }
+      });
+
+      if (nextTestDate !== null) {
+        // Use the exact same calendar-day calculation as Test Day, so today is not counted.
+        const daysUntil = Math.round((nextTestDate - currentDateOnly) / (1000 * 60 * 60 * 24));
+        if (daysUntil >= 0) {
+          countdownText = `<div style="font-size:11px; color:#2563eb; margin-top:2px; font-weight:bold;">⏳ Test in ${daysUntil} days</div>`;
+        }
+      }
+    }
+
+    // Test selection button should be visible ONLY when the month-level Test Day switch is ON.
+    let testDayToggleButton = testDaySelectionEnabled ? `<button type="button" onclick="toggleTestDay(event, '${currentMonth}', ${d})" aria-pressed="${isTestDay ? 'true' : 'false'}" style="position:absolute; top:8px; left:8px; background:${isTestDay ? '#16a34a' : '#e2e8f0'}; color:${isTestDay ? '#fff' : '#1e293b'}; border:none; border-radius:6px; padding:2px 6px; font-size:10px; cursor:pointer; opacity:1; width:auto; margin:0;" title="Mark/Unmark as Test Day">${isTestDay ? '🎯 Test Selected' : '🎯 Select Test'}</button>` : '';
+
+    html += `<div class="card" onclick="selectDay(${d})" style="${cardStyle}">
+      ${testDayToggleButton}
+      ${currentDayHighlightHtml}
+      <span class="icon" style="margin-top:12px;">📅</span>
+      <div style="margin-top:2px; ${fontColorStyle}">Day ${d}</div>
+      ${badgeIndicator}
+      ${countdownText}
+    </div>`;
+  }
+  document.getElementById("month-days-list").innerHTML = html;
+}
+
+function renderDaySubjectsList() {
+  let subjects = ["Physics", "Chemistry", "Biology"];
+  let html = "";
+
+  subjects.forEach(subj => {
+    let chapters = getChaptersForDaySubject(currentMonth, currentDayNum, subj);
+    let hasSubjTask = chapters.length > 0;
+    let subjCompleted = hasSubjTask && isSubjectCompletedForDay(currentMonth, currentDayNum, subj);
+
+    let icon = subj === 'Physics' ? '⚡' : subj === 'Chemistry' ? '🧪' : '🧬';
+    let cardStyle = "";
+    let badgeText = "";
+
+    if (subjCompleted) {
+      cardStyle = "border-color:#0f5132; background:var(--card-bg, #d1e7dd); color:#0f5132;";
+      badgeText = `<div style="font-size:11px; background:#0f5132; color:#fff; padding:2px 6px; border-radius:6px; margin-top:4px; font-weight:bold;">✅ Subject Completed</div>`;
+    } else if (hasSubjTask) {
+      cardStyle = "border-color:#b91c1c; background:var(--card-bg, #fff5f5);";
+      badgeText = `<div style="font-size:11px; background:#b91c1c; color:#fff; padding:2px 6px; border-radius:6px; margin-top:4px; font-weight:bold;">📌 Schedule Added</div>`;
+    } else {
+      badgeText = `<div style="font-size:11px; color:#64748b; margin-top:2px;">Select Subject</div>`;
+    }
+
+    if (!cardStyle) {
+      const softSubjectColor = subj === 'Physics' ? 'rgba(59,130,246,.34)' :
+                               subj === 'Chemistry' ? 'rgba(16,185,129,.34)' :
+                               'rgba(139,92,246,.34)';
+      cardStyle = `border:2px solid ${softSubjectColor}; box-shadow:0 0 7px ${softSubjectColor};`;
+    }
+    html += `<div class="card" onclick="selectDaySubject('${subj}')" style="${cardStyle}">
+      <span class="icon">${icon}</span>
+      <div style="margin-top:2px;">${subj}</div>
+      ${badgeText}
+    </div>`;
+  });
+
+  document.getElementById("day-subjects-grid").innerHTML = html;
+}
+
+function renderDaySubjectChaptersList() {
+  let allChaptersForSubject = getChaptersForDaySubject(currentMonth, currentDayNum, currentDaySubject);
+  let html = "";
+
+  if (allChaptersForSubject.length === 0) {
+    html = `<p class='small'>No chapters added yet for this day and subject. Use the box above to add one!</p>`;
+  } else {
+    allChaptersForSubject.forEach(c => {
+      let activeDetailKey = getDayChapterDetailKey(c);
+      let d = appData.dayChapterDetails[activeDetailKey];
+      if (!d) {
+        Object.keys(appData.dayChapterDetails).forEach(k => {
+          if (k.endsWith(`_${currentDaySubject}_${c}`)) {
+            d = appData.dayChapterDetails[k];
+            activeDetailKey = k;
+          }
+        });
+      }
+      d = d || {};
+      let dayData = d.dayData || [];
+      let startAbs = getAbsoluteDayNumber(d.startMonth || currentMonth, parseInt(d.startDay) || currentDayNum);
+      let currentAbs = getAbsoluteDayNumber(currentMonth, currentDayNum);
+      let targetSubDayIndex = currentAbs - startAbs;
+
+      let fillColor = "#881337";
+      let statusLabel = "No Plan Generated";
+      let pct = 0;
+
+      if (dayData.length > 0 && targetSubDayIndex >= 0 && targetSubDayIndex < dayData.length) {
+        let subDayObj = dayData[targetSubDayIndex];
+        pct = subDayObj.completed ? 100 : 0;
+        fillColor = subDayObj.completed ? "#0f5132" : "#b45309";
+        statusLabel = subDayObj.completed ? `Sub-Day ${targetSubDayIndex + 1}: Completed` : `Sub-Day ${targetSubDayIndex + 1}: Pending`;
+      } else if (dayData.length > 0) {
+        statusLabel = `Plan Exists (${dayData.length} Days)`;
+        fillColor = "#2b6cb0";
+      }
+
+      html += `<div class="card" onclick="openChapterDetailForDay('${c}', '${activeDetailKey}')" style="border-color:${fillColor};">
+        <button class="delete-btn" onclick="deleteDayChapter(event, '${c}')" title="Delete">🗑️</button>
+        <span class="icon">📖</span>
+        <div style="margin-top:2px;">${c}</div>
+        <div class="card-status ${pct === 100 ? 'status-completed' : 'status-progress'}">
+          ${statusLabel}
+        </div>
+        <div class="card-progress-bar">
+          <div class="card-progress-fill" style="width:${pct}%; background:${fillColor};"></div>
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById("day-subject-chapters-list").innerHTML = `<div class="card-grid">${html}</div>`;
+}
+
+function addDayChapter() {
+  let input = document.getElementById("new-day-chapter-name");
+  let name = input.value.trim();
+  if (!name) return;
+
+  let key = getDaySubjectKey();
+  if (!appData.daySubjectChapters[key]) appData.daySubjectChapters[key] = [];
+  if (!appData.daySubjectChapters[key].includes(name)) {
+    appData.daySubjectChapters[key].push(name);
+  }
+
+  let detailKey = getDayChapterDetailKey(name);
+  if (!appData.dayChapterDetails[detailKey]) {
+    appData.dayChapterDetails[detailKey] = {
+      startMonth: currentMonth,
+      startDay: currentDayNum,
+      days: 1,
+      categories: [{ name: "Module", total: "" }, { name: "RACE", total: "" }, { name: "TEQ", total: "" }],
+      dayData: []
+    };
+  }
+
+  saveData();
+  input.value = "";
+  renderDaySubjectChaptersList();
+}
+
+function deleteDayChapter(event, chapterName) {
+  event.stopPropagation();
+  let key = getDaySubjectKey();
+  if (appData.daySubjectChapters[key]) {
+    appData.daySubjectChapters[key] = appData.daySubjectChapters[key].filter(c => c !== chapterName);
+  }
+  delete appData.dayChapterDetails[getDayChapterDetailKey(chapterName)];
+  Object.keys(appData.dayChapterDetails).forEach(k => {
+    if (k.endsWith(`_${currentDaySubject}_${chapterName}`)) {
+      delete appData.dayChapterDetails[k];
+    }
+  });
+  saveData();
+  renderDaySubjectChaptersList();
+}
+
+function openChapterDetailForDay(chapterName, detailKey) {
+  navTo('chapter-detail', { chapter: chapterName, detailKey: detailKey });
+}
+
+function parseQuestionRange(value) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return { valid: false, empty: true, start: 1, end: 0, total: 0, display: '' };
+
+  // Accept a simple total such as "50" as 1–50, and explicit ranges
+  // such as "1-50", "1–50", "Q1-Q50", or "21 to 50".
+  const cleaned = raw.replace(/questions?/ig, '').replace(/\bq\s*/ig, '').trim();
+  const rangeMatch = cleaned.match(/^(\d+)\s*(?:-|–|—|to|से(?:\s*लेकर)?)\s*(\d+)$/i);
+  if (rangeMatch) {
+    const start = parseInt(rangeMatch[1], 10);
+    const end = parseInt(rangeMatch[2], 10);
+    if (Number.isInteger(start) && Number.isInteger(end) && start >= 1 && end >= start) {
+      return { valid: true, empty: false, start, end, total: end - start + 1, display: `${start}–${end}` };
+    }
+    return { valid: false, empty: false, start: 1, end: 0, total: 0, display: raw };
+  }
+
+  if (/^\d+$/.test(cleaned)) {
+    const total = parseInt(cleaned, 10);
+    if (total >= 1) {
+      return { valid: true, empty: false, start: 1, end: total, total, display: `1–${total}` };
+    }
+  }
+
+  return { valid: false, empty: false, start: 1, end: 0, total: 0, display: raw };
+}
+
+function getCategoryInputValue(cat) {
+  if (cat && cat.rangeInput !== undefined && cat.rangeInput !== null) return String(cat.rangeInput);
+  if (cat && cat.rangeStart !== undefined && cat.rangeEnd !== undefined && cat.rangeStart && cat.rangeEnd) {
+    return `${cat.rangeStart}–${cat.rangeEnd}`;
+  }
+  if (cat && cat.total !== undefined && cat.total !== null && cat.total !== '') return String(cat.total);
+  return '';
+}
+
+function loadChapterDetail() {
+  let detailKey = (history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey();
+  let p = appData.dayChapterDetails[detailKey];
+
+  if (!p) {
+    p = {
+      startMonth: currentMonth,
+      startDay: currentDayNum,
+      days: 1,
+      categories: [{ name: "Module", total: "" }, { name: "RACE", total: "" }, { name: "TEQ", total: "" }],
+      dayData: []
+    };
+    appData.dayChapterDetails[detailKey] = p;
+    saveData();
+  }
+
+  document.getElementById("md-days").value = p.days || "";
+  let container = document.getElementById("categories-container");
+  container.innerHTML = "";
+
+  let categories = p.categories || [
+    { name: "Module", total: "" },
+    { name: "RACE", total: "" },
+    { name: "TEQ", total: "" }
+  ];
+
+  categories.forEach((cat) => {
+    addCategoryRow(cat.name, getCategoryInputValue(cat), detailKey);
+  });
+
+  renderPlanDetailsUI(detailKey);
+}
+
+function addCategoryRow(name = "", total = "", specificKey = "") {
+  let container = document.getElementById("categories-container");
+  let div = document.createElement("div");
+  div.className = "cat-row";
+  div.innerHTML = `
+    <input type="text" class="cat-name-input" placeholder="Category Name" value="${String(name).replace(/\"/g, '&quot;') }" oninput="saveChapterDetail()">
+    <input type="text" inputmode="text" class="cat-total-input" placeholder="e.g. 50 or 21–50" value="${String(total).replace(/\"/g, '&quot;') }" oninput="saveChapterDetail()">
+    <button class="remove-cat-btn" onclick="removeCategoryRow(this)">🗑️</button>
+  `;
+  container.appendChild(div);
+  saveChapterDetail();
+}
+
+function removeCategoryRow(btn) {
+  let container = document.getElementById("categories-container");
+  if (container.children.length <= 1) {
+    alert("At least one category is required.");
+    return;
+  }
+  btn.parentElement.remove();
+  saveChapterDetail();
+}
+
+function saveChapterDetail() {
+  let detailKey = (history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey();
+  let days = parseInt(document.getElementById("md-days").value) || 0;
+  let catNameInputs = document.querySelectorAll(".cat-name-input");
+  let catTotalInputs = document.querySelectorAll(".cat-total-input");
+  let categories = [];
+  catNameInputs.forEach((input, i) => {
+    const rangeInput = String(catTotalInputs[i].value || '').trim();
+    const parsed = parseQuestionRange(rangeInput);
+    categories.push({
+      name: input.value.trim(),
+      total: parsed.valid ? parsed.total : (parseInt(rangeInput, 10) || 0),
+      rangeStart: parsed.valid ? parsed.start : undefined,
+      rangeEnd: parsed.valid ? parsed.end : undefined,
+      rangeInput: rangeInput
+    });
+  });
+
+  if (!appData.dayChapterDetails[detailKey]) {
+    appData.dayChapterDetails[detailKey] = { startMonth: currentMonth, startDay: currentDayNum, days, categories, dayData: [] };
+  } else {
+    appData.dayChapterDetails[detailKey].startMonth = appData.dayChapterDetails[detailKey].startMonth || currentMonth;
+    appData.dayChapterDetails[detailKey].startDay = appData.dayChapterDetails[detailKey].startDay || currentDayNum;
+    appData.dayChapterDetails[detailKey].days = days;
+    appData.dayChapterDetails[detailKey].categories = categories;
+  }
+  saveData();
+}
+
+function generateAutoPlan() {
+  saveChapterDetail();
+  let detailKey = (history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey();
+  let p = appData.dayChapterDetails[detailKey];
+
+  if (!p || p.days <= 0) {
+    alert("Please enter valid total target days.");
+    return;
+  }
+
+  let days = p.days;
+  let categories = p.categories || [];
+  let parsedCategories = [];
+
+  for (const cat of categories) {
+    if (!cat.name) continue;
+    const rawRange = String(cat.rangeInput !== undefined ? cat.rangeInput : getCategoryInputValue(cat) || '').trim();
+
+    // An intentionally cleared range means this category has no allocation.
+    // Do not keep the old generated schedule for it. The category row itself
+    // remains available so the user can enter a new range later.
+    if (!rawRange) continue;
+
+    const parsed = parseQuestionRange(rawRange);
+    if (!parsed.valid) {
+      alert(`Please enter a valid question range for ${cat.name}. Example: 50 or 21–50.`);
+      return;
+    }
+    parsedCategories.push({ ...cat, start: parsed.start, end: parsed.end, total: parsed.total, rangeInput: rawRange });
+  }
+
+  function calcRanges(start, end) {
+    const total = end - start + 1;
+    if (total <= 0) return Array(days).fill("");
+    const perDay = Math.floor(total / days);
+    const rem = total % days;
+    const arr = [];
+    let curr = start;
+    for (let i = 0; i < days; i++) {
+      const count = perDay + (i < rem ? 1 : 0);
+      arr.push(count > 0 ? `Q${curr}–${curr + count - 1}` : "");
+      curr += count;
+    }
+    return arr;
+  }
+
+  const catRanges = parsedCategories.map(cat => calcRanges(cat.start, cat.end));
+  const oldDayData = p.dayData || [];
+  const newDayData = [];
+
+  for (let i = 0; i < days; i++) {
+    const dayRanges = {};
+    parsedCategories.forEach((cat, catIdx) => {
+      // Always recalculate from the CURRENT range. This fixes stale allocations
+      // when the user changes 50 -> 21–50, 1–50 -> 25–90, or changes target days.
+      dayRanges[cat.name] = catRanges[catIdx][i];
+    });
+
+    const oldCompleted = (oldDayData[i] && oldDayData[i].categoryCompleted) || {};
+    const categoryCompleted = {};
+    parsedCategories.forEach(cat => {
+      const name = String(cat.name || '').trim();
+      if (name) categoryCompleted[name] = !!oldCompleted[name];
+    });
+
+    newDayData.push({
+      ranges: dayRanges,
+      categoryCompleted: categoryCompleted,
+      completed: false
+    });
+  }
+
+  p.startMonth = currentMonth;
+  p.startDay = currentDayNum;
+  p.dayData = newDayData;
+  p.categories = categories.map(cat => {
+    const rawRange = String(cat.rangeInput !== undefined ? cat.rangeInput : getCategoryInputValue(cat) || '').trim();
+    const parsed = parseQuestionRange(rawRange);
+    return {
+      name: cat.name,
+      total: parsed.valid ? parsed.total : 0,
+      rangeStart: parsed.valid ? parsed.start : undefined,
+      rangeEnd: parsed.valid ? parsed.end : undefined,
+      rangeInput: rawRange
+    };
+  });
+  newDayData.forEach(day => syncSubDayCompletion(p, day));
+  saveData();
+  renderPlanDetailsUI(detailKey);
+}
+
+function getMonthAndDayFromAbsolute(absDayNum) {
+  let calcMonth = months[0];
+  let calcDay = absDayNum;
+  for (let m = 0; m < months.length; m++) {
+    let mName = months[m];
+    let mDays = monthDaysCount[mName];
+    if (calcDay <= mDays) {
+      calcMonth = mName;
+      break;
+    } else {
+      calcDay -= mDays;
+    }
+  }
+  return { month: calcMonth, day: calcDay };
+}
+
+function htmlJsArg(value) {
+  return JSON.stringify(String(value ?? '')).replace(/'/g, '&#39;');
+}
+
+function renderPlanDetailsUI(specificKey = "") {
+  let detailKey = specificKey || ((history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey());
+  let p = appData.dayChapterDetails[detailKey];
+  let daysList = document.getElementById("md-days-list");
+
+  if (!p || !p.dayData || p.dayData.length === 0) {
+    daysList.innerHTML = "";
+    document.getElementById("md-pct").textContent = "0%";
+    document.getElementById("md-bar").style.width = "0%";
+    document.getElementById("md-status-badge").innerHTML = `<span class="badge badge-red">🚨 Alert: No Target Generated</span>`;
+    return;
+  }
+
+  let completedDays = 0;
+  let categories = p.categories || [];
+  let startAbs = getAbsoluteDayNumber(p.startMonth || currentMonth, parseInt(p.startDay) || currentDayNum);
+  let currentAbs = getAbsoluteDayNumber(currentMonth, currentDayNum);
+  let targetSubDayIndex = currentAbs - startAbs;
+
+  p.dayData.forEach((day) => {
+    syncSubDayCompletion(p, day);
+    if (day.completed) completedDays++;
+  });
+
+  let currentDayCardHtml = "";
+  if (targetSubDayIndex >= 0 && targetSubDayIndex < p.dayData.length) {
+    let day = p.dayData[targetSubDayIndex];
+    let inputsHtml = "";
+    categories.forEach(cat => {
+      if (cat.name && cat.total > 0) {
+        let val = (day.ranges && day.ranges[cat.name] !== undefined) ? day.ranges[cat.name] : "";
+        let catDone = !!(day.categoryCompleted && day.categoryCompleted[cat.name]);
+        inputsHtml += `
+        <div class="row-input-group" style="display:flex; align-items:center; gap:9px;">
+          <label style="display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:0 0 auto;" title="Mark ${cat.name} complete">
+            <input type="checkbox" ${catDone ? 'checked' : ''} onchange='toggleCategoryDone(${targetSubDayIndex}, ${htmlJsArg(cat.name)}, ${htmlJsArg(detailKey)})' style="width:20px;height:20px;accent-color:#0f5132;">
+          </label>
+          <span style="min-width:70px;">${cat.name}</span>
+          <input type="text" value="${val}" oninput="updateDayRange(${targetSubDayIndex}, '${cat.name.replace(/'/g, "\\'")}', this.value, '${detailKey}')" style="flex:1;">
+        </div>`;
+      }
+    });
+
+    let currentMappedAbs = startAbs + targetSubDayIndex;
+    let mappedDate = getMonthAndDayFromAbsolute(currentMappedAbs);
+
+    currentDayCardHtml = `<div class="day-card ${day.completed ? 'completed' : ''}" style="border:2px solid ${day.completed ? '#0f5132' : '#b91c1c'};">
+      <div class="day-header" style="display:block;">
+        <div style="display:flex; align-items:center; width:100%; flex-wrap:wrap;">
+          <h4 style="margin:0;">Sub-Day ${targetSubDayIndex + 1}</h4>
+          <label style="display:inline-flex; align-items:center; gap:5px; margin:0; font-size:12px; font-weight:800; color:#475569; margin-left:auto; margin-right:auto;" title="Automatically checked when all categories are completed">
+            <input type="checkbox" ${day.completed ? 'checked' : ''} disabled style="width:19px;height:19px;accent-color:#0f5132;cursor:default;">
+            All Done
+          </label>
+          ${day.completed ? `<span class="badge-done" style="margin-top:0; font-size:14px; margin-left:auto;">✓ Completed</span>` : `<span class="badge-alert" style="margin-top:0; font-size:14px; margin-left:auto;">🚨 Incomplete</span>`}
+        </div>
+        <div class="day-sub-info" style="margin-top:5px;">(Assigned to ${mappedDate.month} Day ${mappedDate.day})</div>
+      </div>
+      ${inputsHtml || '<div style="font-size:12px; color:#64748b;">No active questions allocated</div>'}
+    </div>`;
+  } else {
+    currentDayCardHtml = `<div class="box"><p class="small">Current day is outside the active range or no specific sub-day mapped.</p></div>`;
+  }
+
+  let allDaysListHtml = "";
+  let currentStartMonth = p.startMonth || currentMonth;
+  let currentStartDayNum = parseInt(p.startDay) || currentDayNum;
+
+  p.dayData.forEach((day, i) => {
+    let tempAbs = getAbsoluteDayNumber(currentStartMonth, currentStartDayNum) + i;
+    let mappedDate = getMonthAndDayFromAbsolute(tempAbs);
+
+    let inputsHtml = "";
+    categories.forEach(cat => {
+      if (cat.name && cat.total > 0) {
+        let val = (day.ranges && day.ranges[cat.name] !== undefined) ? day.ranges[cat.name] : "";
+        let catDone = !!(day.categoryCompleted && day.categoryCompleted[cat.name]);
+        inputsHtml += `
+        <div class="row-input-group" style="display:flex; align-items:center; gap:9px;">
+          <label style="display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex:0 0 auto;" title="Mark ${cat.name} complete">
+            <input type="checkbox" ${catDone ? 'checked' : ''} onchange='toggleCategoryDone(${i}, ${htmlJsArg(cat.name)}, ${htmlJsArg(detailKey)})' style="width:20px;height:20px;accent-color:#0f5132;">
+          </label>
+          <span style="min-width:70px;">${cat.name}</span>
+          <input type="text" value="${val}" oninput="updateDayRange(${i}, '${cat.name.replace(/'/g, "\\'")}', this.value, '${detailKey}')" style="flex:1;">
+        </div>`;
+      }
+    });
+
+    allDaysListHtml += `<div class="day-card ${day.completed ? 'completed' : ''}" style="margin-top:10px;">
+      <div class="day-header" style="display:block;">
+        <div style="display:flex; align-items:center; width:100%; flex-wrap:wrap;">
+          <h4 style="margin:0;">Sub-Day ${i + 1}</h4>
+          <label style="display:inline-flex; align-items:center; gap:5px; margin:0; font-size:12px; font-weight:800; color:#475569; margin-left:auto; margin-right:auto;" title="Automatically checked when all categories are completed">
+            <input type="checkbox" ${day.completed ? 'checked' : ''} disabled style="width:19px;height:19px;accent-color:#0f5132;cursor:default;">
+            All Done
+          </label>
+          ${day.completed ? `<span class="badge-done" style="margin-top:0; font-size:14px; margin-left:auto;">✓ Completed</span>` : `<span class="badge-alert" style="margin-top:0; font-size:14px; margin-left:auto;">🚨 Incomplete</span>`}
+        </div>
+        <div class="day-sub-info" style="margin-top:5px;">(Assigned to ${mappedDate.month} Day ${mappedDate.day})</div>
+      </div>
+      ${inputsHtml}
+    </div>`;
+  });
+
+  let toggleSectionHtml = `
+    <div style="margin-top:15px;">
+      <button onclick="toggleAllDaysView()" id="see-all-toggle-btn" style="background:#2b6cb0; font-size:13px; padding:8px 12px; width:100%;">👇 View All ${p.dayData.length} Days Plan</button>
+      <div id="all-days-collapsible-container" class="hidden" style="margin-top:12px; border-top:2px dashed #cbd5e1; padding-top:12px;">
+        <h4 style="margin:0 0 10px 0; font-size:14px; color:#475569;">📋 Full Allotted Schedule:</h4>
+        ${allDaysListHtml}
+      </div>
+    </div>
+  `;
+
+  daysList.innerHTML = currentDayCardHtml + toggleSectionHtml;
+  let pct = p.dayData.length > 0 ? Math.round((completedDays / p.dayData.length) * 100) : 0;
+  document.getElementById("md-pct").textContent = `${pct}%`;
+  document.getElementById("md-bar").style.width = `${pct}%`;
+
+  let badgeContainer = document.getElementById("md-status-badge");
+  if (p.dayData.length > 0 && completedDays >= p.dayData.length) {
+    badgeContainer.innerHTML = `<span class="badge badge-gold">✅ Status: Target Fully Completed!</span>`;
+  } else {
+    badgeContainer.innerHTML = `<span class="badge badge-red">🚨 Red Alert: Pending Target (${p.dayData.length - completedDays} Days remaining)</span>`;
+  }
+}
+
+function toggleAllDaysView() {
+  let container = document.getElementById("all-days-collapsible-container");
+  let btn = document.getElementById("see-all-toggle-btn");
+  if (container.classList.contains("hidden")) {
+    container.classList.remove("hidden");
+    btn.textContent = "👆 Hide Full Schedule";
+  } else {
+    container.classList.add("hidden");
+    btn.textContent = `👇 View All Days Plan`;
+  }
+}
+
+function updateDayRange(index, catName, value, specificKey = "") {
+  let detailKey = specificKey || ((history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey());
+  if (appData.dayChapterDetails[detailKey] && appData.dayChapterDetails[detailKey].dayData[index]) {
+    if (!appData.dayChapterDetails[detailKey].dayData[index].ranges) {
+      appData.dayChapterDetails[detailKey].dayData[index].ranges = {};
+    }
+    appData.dayChapterDetails[detailKey].dayData[index].ranges[catName] = value;
+    saveData();
+  }
+}
+
+
+function syncSubDayCompletion(detail, day) {
+  if (!detail || !day) return false;
+
+  if (!day.categoryCompleted || typeof day.categoryCompleted !== "object") {
+    day.categoryCompleted = {};
+  }
+
+  // Only categories that actually have an allocated range on THIS sub-day
+  // are required. This prevents an unused/blank category from blocking
+  // completion of the day.
+  const allocatedNames = new Set(
+    Object.entries(day.ranges || {})
+      .filter(([name, value]) => String(name || "").trim() && String(value || "").trim())
+      .map(([name]) => String(name).trim())
+  );
+
+  // Fallback for older data where ranges may not contain the category key.
+  if (allocatedNames.size === 0) {
+    (detail.categories || []).forEach(cat => {
+      if (cat && cat.name && Number(cat.total) > 0) {
+        allocatedNames.add(String(cat.name).trim());
+      }
+    });
+  }
+
+  const activeNames = Array.from(allocatedNames);
+  day.completed = activeNames.length > 0 &&
+    activeNames.every(name => !!day.categoryCompleted[name]);
+
+  return day.completed;
+}
+
+function toggleCategoryDone(index, catName, specificKey = "") {
+  const detailKey = specificKey || (
+    history.state && history.state.params && history.state.params.detailKey
+      ? history.state.params.detailKey
+      : getDayChapterDetailKey()
+  );
+
+  const detail = appData.dayChapterDetails[detailKey];
+  if (!detail || !detail.dayData || !detail.dayData[index]) return;
+
+  const day = detail.dayData[index];
+  if (!day.categoryCompleted || typeof day.categoryCompleted !== "object") {
+    day.categoryCompleted = {};
+  }
+
+  const normalizedName = String(catName ?? "").trim();
+  day.categoryCompleted[normalizedName] = !day.categoryCompleted[normalizedName];
+
+  syncSubDayCompletion(detail, day);
+
+  saveData();
+  renderPlanDetailsUI(detailKey);
+}
+
+function toggleDayDone(index, specificKey = "") {
+  let detailKey = specificKey || ((history.state && history.state.params && history.state.params.detailKey) ? history.state.params.detailKey : getDayChapterDetailKey());
+  if (appData.dayChapterDetails[detailKey] && appData.dayChapterDetails[detailKey].dayData[index]) {
+    appData.dayChapterDetails[detailKey].dayData[index].completed = !appData.dayChapterDetails[detailKey].dayData[index].completed;
+    saveData();
+    renderPlanDetailsUI(detailKey);
+  }
+}
+
+function autoCalc(prefix) {
+  let tot = +document.getElementById(`${prefix}-tot`).value || 0;
+  let wrongVal = document.getElementById(`${prefix}-wrong`).value;
+  let unattVal = document.getElementById(`${prefix}-unatt`).value;
+  if (wrongVal !== "" || unattVal !== "") {
+    let wrong = +wrongVal || 0;
+    let unatt = +unattVal || 0;
+    let autoObt = tot - (wrong * 5) - (unatt * 4);
+    document.getElementById(`${prefix}-obt`).value = autoObt;
+  }
+  updateOverallTotal();
+}
+
+function updateOverallTotal() {
+  let pObt = +document.getElementById("p-obt").value || 0;
+  let cObt = +document.getElementById("c-obt").value || 0;
+  let bObt = +document.getElementById("b-obt").value || 0;
+  let zObt = +document.getElementById("z-obt").value || 0;
+
+  let pTot = +document.getElementById("p-tot").value || 0;
+  let cTot = +document.getElementById("c-tot").value || 0;
+  let bTot = +document.getElementById("b-tot").value || 0;
+  let zTot = +document.getElementById("z-tot").value || 0;
+
+  let pWrong = +document.getElementById("p-wrong").value || 0;
+  let cWrong = +document.getElementById("c-wrong").value || 0;
+  let bWrong = +document.getElementById("b-wrong").value || 0;
+  let zWrong = +document.getElementById("z-wrong").value || 0;
+
+  let pUnatt = +document.getElementById("p-unatt").value || 0;
+  let cUnatt = +document.getElementById("c-unatt").value || 0;
+  let bUnatt = +document.getElementById("b-unatt").value || 0;
+  let zUnatt = +document.getElementById("z-unatt").value || 0;
+
+  document.getElementById("grand-obt").value = pObt + cObt + bObt + zObt;
+  document.getElementById("grand-tot").value = pTot + cTot + bTot + zTot;
+  document.getElementById("grand-wrong").value = pWrong + cWrong + bWrong + zWrong;
+  document.getElementById("grand-unatt").value = pUnatt + cUnatt + bUnatt + zUnatt;
+}
+
+function toggleTestForm() {
+  let box = document.getElementById("test-form-box");
+  box.style.display = (box.style.display === "none") ? "block" : "none";
+}
+
+function addTestScore() {
+  let name = document.getElementById("test-name").value.trim();
+  let grandObtained = +document.getElementById("grand-obt").value || 0;
+  let grandTotal = +document.getElementById("grand-tot").value || 0;
+  let grandWrong = +document.getElementById("grand-wrong").value || 0;
+  let grandUnatt = +document.getElementById("grand-unatt").value || 0;
+  let review = document.getElementById("test-review").value.trim();
+
+  if (!name || grandTotal <= 0) {
+    alert("Please fill test name and valid total marks.");
+    return;
+  }
+  if (grandObtained < 0 || grandObtained > grandTotal) {
+    alert("Obtained marks must be between 0 and the total marks.");
+    return;
+  }
+  if (grandWrong < 0 || grandUnatt < 0) {
+    alert("Wrong and unattempted questions cannot be negative.");
+    return;
+  }
+
+  const subjectPrefixes = ['p','c','b','z'];
+  for (const prefix of subjectPrefixes) {
+    const tot = +document.getElementById(`${prefix}-tot`)?.value || 0;
+    const wrong = +document.getElementById(`${prefix}-wrong`)?.value || 0;
+    const unatt = +document.getElementById(`${prefix}-unatt`)?.value || 0;
+    const obt = +document.getElementById(`${prefix}-obt`)?.value || 0;
+    if (tot < 0 || wrong < 0 || unatt < 0 || obt < 0 || obt > tot || wrong + unatt > tot / 5) {
+      alert("Please check the subject-wise test details: obtained marks, wrong questions and unattempted questions must be consistent with that subject's total.");
+      return;
+    }
+  }
+
+  const subjectDetails = {};
+  subjectPrefixes.forEach(prefix => {
+    subjectDetails[prefix] = {
+      obtained: +document.getElementById(`${prefix}-obt`)?.value || 0,
+      wrong: +document.getElementById(`${prefix}-wrong`)?.value || 0,
+      unattempted: +document.getElementById(`${prefix}-unatt`)?.value || 0,
+      totalMarks: +document.getElementById(`${prefix}-tot`)?.value || 0
+    };
+  });
+
+  appData.tests.push({
+    id: Date.now(),
+    name: name,
+    testDayKey: activeTestTrackerDayKey || null,
+    grandObtained: grandObtained,
+    grandTotal: grandTotal,
+    grandWrong: grandWrong,
+    grandUnatt: grandUnatt,
+    percentage: Math.round((grandObtained / grandTotal) * 100),
+    review: review,
+    subjectDetails: subjectDetails
+  });
+
+  saveData();
+  activeTestTrackerDayKey = null;
+
+  // Reset the complete Add Test form after saving.
+  // The saved test keeps all its data in appData.tests, while the form
+  // becomes completely blank for entering the next test.
+  resetTestForm();
+
+  renderTests();
+}
+
+function resetTestForm() {
+  const fieldIds = [
+    "test-name", "grand-obt", "grand-tot", "grand-wrong", "grand-unatt",
+    "p-obt", "p-wrong", "p-unatt", "p-tot",
+    "c-obt", "c-wrong", "c-unatt", "c-tot",
+    "b-obt", "b-wrong", "b-unatt", "b-tot",
+    "z-obt", "z-wrong", "z-unatt", "z-tot",
+    "test-review"
+  ];
+
+  fieldIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+}
+
+
+function openSavedTestDetails(id) {
+  const test = appData.tests.find(t => t.id === id);
+  if (!test) return;
+
+  const old = document.getElementById("saved-test-details-backdrop");
+  if (old) old.remove();
+
+  const esc = escapeHtml;
+  const subjectRows = [
+    ["Physics", "p", "⚛️"],
+    ["Chemistry", "c", "🧪"],
+    ["Botany", "b", "🌿"],
+    ["Zoology", "z", "🦁"]
+  ];
+
+  let body = "";
+  subjectRows.forEach(([name, key, icon]) => {
+    // Subject-wise marks are saved inside test.subjectDetails[key].
+    // v58 was looking for flat fields such as pObtained/pWrong, so
+    // the saved values were present but could not be displayed.
+    const details = test.subjectDetails?.[key] || {};
+    const obt = details.obtained ?? test[key + "Obtained"] ?? test[key + "Score"] ?? test[key + "obt"] ?? "";
+    const wrong = details.wrong ?? test[key + "Wrong"] ?? test[key + "wrong"] ?? "";
+    const unatt = details.unattempted ?? test[key + "Unatt"] ?? test[key + "unatt"] ?? "";
+    const total = details.totalMarks ?? test[key + "Total"] ?? test[key + "total"] ?? "";
+    if (obt !== "" || wrong !== "" || unatt !== "" || total !== "") {
+      body += `<div style="padding:10px 0;border-bottom:1px solid rgba(100,116,139,.18);">
+        <b>${icon} ${esc(name)}</b>
+        <div style="margin-top:5px;font-size:14px;">
+          Marks: <b>${esc(obt)}</b> / ${esc(total)}
+          &nbsp;|&nbsp; Wrong: <b>${esc(wrong)}</b>
+          &nbsp;|&nbsp; Unattempted: <b>${esc(unatt)}</b>
+        </div>
+      </div>`;
+    }
+  });
+
+  if (!body) {
+    body = `<div style="padding:12px 0;opacity:.75;">Saved marks details are not available for this record.</div>`;
+  }
+
+  const backdrop = document.createElement("div");
+  backdrop.id = "saved-test-details-backdrop";
+  backdrop.className = "test-review-modal-backdrop";
+  backdrop.innerHTML = `
+    <div class="test-review-modal" onclick="event.stopPropagation()">
+      <h3>📊 ${esc(test.name || "Test Result")}</h3>
+      <div style="font-size:13px;opacity:.8;margin-bottom:8px;">
+        Test Date: ${esc(test.testDate || test.date || "")}
+      </div>
+      ${body}
+      <div class="test-review-modal-actions">
+        <button type="button" class="test-review-cancel"
+          onclick="document.getElementById('saved-test-details-backdrop')?.remove()">Close</button>
+      </div>
+    </div>`;
+  document.body.appendChild(backdrop);
+  backdrop.addEventListener("click", e => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+}
+
+function editTestReview(id) {
+  // Use an in-app editor instead of prompt(), because prompt() can be
+  // blocked/unreliable inside Android WebView/APK builds.
+  let test = appData.tests.find(t => t.id === id);
+  if (!test) return;
+
+  const old = document.getElementById("test-review-editor-backdrop");
+  if (old) old.remove();
+
+  const backdrop = document.createElement("div");
+  backdrop.id = "test-review-editor-backdrop";
+  backdrop.className = "test-review-modal-backdrop";
+
+  const modal = document.createElement("div");
+  modal.className = "test-review-modal";
+
+  const title = document.createElement("h3");
+  title.textContent = "✏️ Edit/Add Review";
+  modal.appendChild(title);
+
+  const label = document.createElement("div");
+  label.style.cssText = "font-size:13px;font-weight:700;margin-bottom:6px;opacity:.8;";
+  label.textContent = "Test: " + (test.name || "");
+  modal.appendChild(label);
+
+  const textarea = document.createElement("textarea");
+  textarea.id = "test-review-editor-textarea";
+  textarea.value = test.review || "";
+  textarea.placeholder = "Write your review / personal notes...";
+  modal.appendChild(textarea);
+
+  const actions = document.createElement("div");
+  actions.className = "test-review-modal-actions";
+
+  const cancel = document.createElement("button");
+  cancel.type = "button";
+  cancel.className = "test-review-cancel";
+  cancel.textContent = "Cancel";
+
+  const save = document.createElement("button");
+  save.type = "button";
+  save.className = "test-review-save";
+  save.textContent = "Save Review";
+
+  cancel.onclick = function(){
+    backdrop.remove();
+  };
+
+  save.onclick = function(){
+    test.review = textarea.value.trim();
+    saveData();
+    backdrop.remove();
+    renderTests();
+  };
+
+  actions.appendChild(cancel);
+  actions.appendChild(save);
+  modal.appendChild(actions);
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+
+  backdrop.addEventListener("click", function(e){
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  setTimeout(function(){
+    textarea.focus();
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+  }, 50);
+}
+
+function deleteTestScore(id) {
+  appData.tests = appData.tests.filter(t => t.id !== id);
+  saveData();
+  renderTests();
+}
+
+function renderTests() {
+  let list = appData.tests || [];
+  let html = "";
+  if (list.length === 0) {
+    html = "<p class='small'>No test records saved yet.</p>";
+  } else {
+    list.forEach(t => {
+      let badgeHtml = t.percentage >= 85 ? `<span class="badge badge-gold">🏆 Excellent (${t.percentage}%)</span>` :
+                      t.percentage >= 70 ? `<span class="badge badge-silver">🌟 Very Good (${t.percentage}%)</span>` :
+                      t.percentage >= 50 ? `<span class="badge badge-bronze">👍 Good (${t.percentage}%)</span>` :
+                      `<span class="badge badge-red">⚠️ Need Improvement (${t.percentage}%)</span>`;
+
+      let reviewHtml = t.review 
+        ? `<div class="test-review-box"><b>💬 Review / Opinion:</b> ${t.review}</div>` 
+        : `<div style="font-size:12px; color:#94a3b8; margin-top:6px; font-style:italic;">No review provided.</div>`;
+
+      const testDateHtml = t.testDayKey ? (() => {
+        const parts = String(t.testDayKey).split('_');
+        const dayNum = parseInt(parts[parts.length - 1], 10);
+        const monthName = parts.slice(0, -1).join('_');
+        const monthIndex = monthIndices[monthName];
+        return (dayNum && monthIndex !== undefined)
+          ? `<span style="font-size:12px;font-weight:800;opacity:.78;margin-left:8px;white-space:nowrap;">${String(dayNum).padStart(2,'0')}/${String(monthIndex + 1).padStart(2,'0')}/2026</span>`
+          : '';
+      })() : '';
+
+      html += `<div class="test-folder-card" id="test-record-${t.id}" onclick="openSavedTestDetails(${t.id})" style="cursor:pointer;">
+        <button class="delete-btn" onclick="event.stopPropagation(); deleteTestScore(${t.id})">🗑</button>
+        <div class="test-folder-header">
+          <h3>📁 ${t.name} ${testDateHtml}</h3>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+          <div><b>Score:</b> <span style="color:#2b6cb0; font-size:16px;">${t.grandObtained} / ${t.grandTotal}</span></div>
+          <div>${badgeHtml}</div>
+        </div>
+        <div class="small" style="margin-top:8px; color:#475569; background:var(--box-bg, #f3eedf); padding:6px 10px; border-radius:6px; border:1px solid #e1dacb;">
+          ❌ Total Wrong Qs: <b>${t.grandWrong}</b> &nbsp;|&nbsp; ⭕ Unattempted Qs: <b>${t.grandUnatt}</b>
+        </div>
+        ${reviewHtml}
+        ${t.testDayKey ? (() => {
+          const parts = String(t.testDayKey).split('_');
+          const dayNum = parseInt(parts[parts.length - 1], 10);
+          const monthName = parts.slice(0, -1).join('_');
+          return (months.includes(monthName) && dayNum) ? getPreTestSnapshotSummary(monthName, dayNum) : '';
+        })() : ''}
+        <button class="review-edit-btn" onclick="event.stopPropagation(); editTestReview(${t.id})">✏️ Edit/Add Review</button>
+      </div>`;
+    });
+  }
+  document.getElementById("test-list").innerHTML = html;
+}
+
+loadSavedTheme();
+navTo('home', {}, true);
+</script>
+
+<script>
+(function(){
+  let allowExit = false;
+  let homeGuardReady = false;
+  function installHomeGuard(){
+    if(homeGuardReady) return;
+    homeGuardReady = true;
+    try { history.pushState({exitGuard:true}, '', location.href); } catch(e) {}
+    window.addEventListener('popstate', function(){
+      if(allowExit) return;
+      const ok = window.confirm('Do you want to exit the app?');
+      if(ok){
+        allowExit = true;
+        history.back();
+      } else {
+        try { history.pushState({exitGuard:true}, '', location.href); } catch(e) {}
+      }
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installHomeGuard);
+  else installHomeGuard();
+})();
+</script>
+</body>
+</html>
